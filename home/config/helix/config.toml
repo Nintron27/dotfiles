@@ -1,0 +1,174 @@
+theme = "catppuccin_mocha"
+
+[editor]
+line-number = "relative"
+mouse = false
+bufferline = "multiple"
+color-modes = true
+
+[editor.cursor-shape]
+insert = "bar"
+normal = "block"
+select = "underline"
+
+[editor.whitespace]
+render = "all"
+
+[editor.file-picker]
+ignore = true
+
+# Key rebindings for colemak mod-dh layout
+[keys.normal]
+# Movements Section #
+#h = "no_op" # /
+#j = "no_op" # | Allows
+k = "no_op" # | rebinding
+#l = "no_op" # \
+n = "move_char_left"
+e = "move_line_down"
+i = "move_line_up"
+o = "move_char_right"
+b = "move_next_word_start"
+w = "move_prev_word_start"
+p = "move_next_word_end"
+B = "move_next_long_word_start"
+W = "move_prev_long_word_start"
+P = "move_next_long_word_end"
+#t = "find_till_char" #default
+#f = "find_next_char" #default
+#T = "till_prev_char" #default
+#F = "find_prev_char" #default
+#G = "goto_line" #default
+"C-n" = "jump_backward"
+"C-o" = "jump_forward"
+
+# Changes Section #
+#r = "replace" #default
+#R = "replace_with_yanked" #default
+#"~" = "switch_case" #default
+#"`" = "switch_to_lowercase" #default
+#"A-`" = "switch_to_uppercase" #default
+l = "insert_mode"
+#a = "append_mode" #default
+L = "insert_at_line_start"
+#A = "append_to_line" #default
+j = "open_below"
+J = "open_above"
+#u = "undo" #default
+#U = "redo" #default
+#"A-u" = "earlier" #default
+#"A-U" = "later" #default
+#y = "yank" #default
+v = "paste_after"
+V = "paste_before"
+#">" = "indent" #default
+#"<" = "unindent" #default
+#"=" = "no_op" #disabled
+#d = "delete_selection" #default
+#"A-d" = "delete_selecton_noyank" #default
+#c = "change_selection" #default
+#"A-c" = "change_selection_noyank" #default
+#"C-a" = "increment" #default
+#"C-x" = "decrement" #default
+#Q = "record_macro" #default
+#q = "replay_macro" #default
+
+# Shell section #
+
+# Selection manipulation section #
+"A-i" = "expand_selection"
+"A-e" = "shrink_selection"
+
+
+# Search section #
+h = "search_next"
+H = "search_prev"
+
+# Minor modes section #
+"C-v" = "select_mode"
+
+# Custom functionality
+"C-f" = [
+  ":new",
+  ":insert-output lf-pick",
+  "select_all",
+  "split_selection_on_newline",
+  "goto_file",
+  "goto_last_modified_file",
+  ":buffer-close!",
+  ":redraw",
+]
+
+[keys.normal.g]
+l = "no_op"
+n = "goto_line_start"
+o = "goto_line_end"
+h = "goto_next_buffer"
+
+[keys.normal.space]
+f = "file_picker_in_current_directory"
+F = "file_picker"
+
+[keys.select]
+# Movements Section #
+h = "no_op" # /
+#j = "no_op" # | Allows
+k = "no_op" # | rebinding
+#l = "no_op" # \
+n = "extend_char_left"
+e = "extend_line_down"
+i = "extend_line_up"
+o = "extend_char_right"
+b = "extend_next_word_start"
+w = "extend_prev_word_start"
+p = "extend_next_word_end"
+B = "extend_next_long_word_start"
+W = "extend_prev_long_word_start"
+P = "extend_next_long_word_end"
+#t = "find_till_char" #default
+#f = "find_next_char" #default
+#T = "till_prev_char" #default
+#F = "find_prev_char" #default
+#G = "goto_line" #default
+# Changes Section #
+#r = "replace" #default
+#R = "replace_with_yanked" #default
+#"~" = "switch_case" #default
+#"`" = "switch_to_lowercase" #default
+#"A-`" = "switch_to_uppercase" #default
+l = "insert_mode"
+#a = "append_mode" #default
+L = "insert_at_line_start"
+#A = "append_to_line" #default
+j = "open_below"
+J = "open_above"
+#u = "undo" #default
+#U = "redo" #default
+#"A-u" = "earlier" #default
+#"A-U" = "later" #default
+#y = "yank" #default
+v = "paste_after"
+V = "paste_before"
+#">" = "indent" #default
+#"<" = "unindent" #default
+#"=" = "no_op" #disabled
+#d = "delete_selection" #default
+#"A-d" = "delete_selecton_noyank" #default
+#c = "change_selection" #default
+#"A-c" = "change_selection_noyank" #default
+#"C-a" = "increment" #default
+#"C-x" = "decrement" #default
+#Q = "record_macro" #default
+#q = "replay_macro" #default
+
+# Shell section #
+
+# Selection manipulation section #
+"A-i" = "expand_selection"
+"A-e" = "shrink_selection"
+
+[keys.select.g]
+l = "no_op"
+n = "goto_line_start"
+o = "goto_line_end"
+h = "goto_next_buffer"
