@@ -1,24 +1,25 @@
 { config, pkgs, ... }:
 
-let
-  unstable = import <unstable> {};
-  customNodePackages = import ./pkgs/nodePackages/default.nix {};
-in
+# let
+#   customNodePackages = import ./pkgs/nodePackages/default.nix {};
+# in
 {
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
   home.username = "work";
   home.homeDirectory = "/home/work";
 
-  nixpkgs.config = {
-    allowUnfree = true;
-    packageOverrides = pkgs: {
-      polybar = pkgs.polybar.override {
-        i3Support = true;
-        pulseSupport = true;
-      };
-    };
-  };
+  nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.allowBroken= true;
+  # nixpkgs.config = {
+  #   allowUnfree = true;
+  #   packageOverrides = pkgs: {
+  #     polybar = pkgs.polybar.override {
+  #       i3Support = true;
+  #       pulseSupport = true;
+  #     };
+  #   };
+  # };
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage
@@ -63,12 +64,12 @@ in
     helix
     ngrok
     mullvad-vpn
-    #unstable for newer features faster
-    unstable.turso-cli
-    unstable.bruno
-    unstable.go
-    unstable.vscodium
-    unstable.flyctl
+
+    turso-cli
+    bruno
+    go
+    vscodium
+    flyctl
     wasmtime
 
     # un-categorized packages
@@ -81,7 +82,7 @@ in
     pavucontrol
     neofetch
     wcalc
-    gnome.gedit
+    gedit
     gnome.gnome-screenshot
     gnome.nautilus
     gnome.file-roller
@@ -101,10 +102,10 @@ in
     gopls
     nodePackages.typescript-language-server
     nodePackages.vscode-langservers-extracted
-    customNodePackages.svelte-language-server
-    customNodePackages."@tailwindcss/language-server"
+    # customNodePackages.svelte-language-server
+    # customNodePackages."@tailwindcss/language-server"
     nodePackages.graphql-language-service-cli
-    python39Packages.pylsp-mypy
+    # python39Packages.pylsp-mypy
     taplo
     nodePackages.yaml-language-server
     lldb

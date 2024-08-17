@@ -133,6 +133,7 @@
     extraSpecialArgs = { inherit inputs; };
     users = {
       nintron = import ../../homes/nintron/home.nix;
+      work = import ../../homes/work/home.nix;
     };
   };
 
