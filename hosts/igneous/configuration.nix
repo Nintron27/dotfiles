@@ -132,7 +132,7 @@
   home-manager = {
     extraSpecialArgs = { inherit inputs; };
     users = {
-      nintron = import ../../home/home.nix;
+      nintron = import ../../homes/nintron/home.nix;
     };
   };
 

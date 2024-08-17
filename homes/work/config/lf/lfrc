@@ -1,0 +1,9 @@
+# Rebindings
+map n updir
+map e down
+map i up
+map o open
+
+map v paste
+
+map <a-d> delete

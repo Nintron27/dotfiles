@@ -1,0 +1,22 @@
+{
+    "border": "pixel",
+    "current_border_width": 2,
+    "floating": "auto_off",
+    "fullscreen_mode": 1,
+    "geometry": {
+        "height": 600,
+        "width": 800,
+        "x": 0,
+        "y": 0
+    },
+    "marks": [],
+    "name": "Alacritty",
+    "percent": 1,
+    "swallows": [
+        {
+            "class": "^Alacritty$",
+            "instance": "^Alacritty$"
+        }
+    ],
+    "type": "con"
+}

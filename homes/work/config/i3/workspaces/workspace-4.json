@@ -1,0 +1,22 @@
+{
+    "border": "none",
+    "current_border_width": 2,
+    "floating": "auto_off",
+    "fullscreen_mode": 1,
+    "geometry": {
+        "height": 1443,
+        "width": 2563,
+        "x": 1919,
+        "y": 0
+    },
+    "marks": [],
+    "name": "Obsidian",
+    "percent": 1,
+    "swallows": [
+        {
+            "class": "^obsidian$",
+            "instance": "^obsidian$"
+        }
+    ],
+    "type": "con"
+}

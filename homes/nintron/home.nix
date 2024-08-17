@@ -1,8 +1,8 @@
 { config, pkgs, ... }:
 
-# let
-  # customNodePackages = import ./pkgs/nodePackages/default.nix {};
-# in
+let
+  customNodePackages = import ./pkgs/nodePackages/default.nix {};
+in
 {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
@@ -42,6 +42,7 @@
     (nerdfonts.override { fonts = [ "FiraCode" ]; })
 
     # desktop stuff
+    qpwgraph
     i3lock
     playerctl
     feh
@@ -114,10 +115,10 @@
     gopls # go
     nodePackages.typescript-language-server
     nodePackages.vscode-langservers-extracted
-    # customNodePackages.svelte-language-server
-    # customNodePackages."@tailwindcss/language-server"
+    customNodePackages.svelte-language-server
+    customNodePackages."@tailwindcss/language-server"
     nodePackages.graphql-language-service-cli
-    # python39Packages.pylsp-mypy
+    python39Packages.pylsp-mypy
     taplo # toml
     nodePackages.yaml-language-server # yaml
     lldb
