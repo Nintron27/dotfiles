@@ -8,6 +8,10 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+
+      # Catppuccin!
+      inputs.catppuccin.nixosModules.catppuccin
+
       inputs.home-manager.nixosModules.home-manager
     ];
 
@@ -18,6 +22,11 @@
     device = "nodev";
     useOSProber = true;
     efiSupport = true;
+
+    catppuccin = {
+      enable = true;
+      flavor = "mocha";
+    };
   };
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
@@ -132,7 +141,12 @@
   home-manager = {
     extraSpecialArgs = { inherit inputs; };
     users = {
-      nintron = import ../../homes/nintron/home.nix;
+      nintron = {
+        imports = [
+          ../../homes/nintron/home.nix
+          inputs.catppuccin.homeManagerModules.catppuccin
+        ];
+      };
       work = import ../../homes/work/home.nix;
     };
   };
@@ -178,7 +192,17 @@
 
     videoDrivers = [ "nvidia" ];
 
-    displayManager.lightdm.enable = true;
+    displayManager.lightdm = {
+      enable = true;
+      greeters.gtk = {
+        enable = true;
+        cursorTheme = {
+          package = pkgs.catppuccin-cursors.mochaLight;
+          name = "catppuccin-mocha-dark-cursors";
+          size = 24;
+        };
+      };
+    };
 
     # disable mouse acceleration
     libinput = {

@@ -50,15 +50,11 @@
     # development
     gnumake
     git
-    tmux
     hey
     nodejs
     beekeeper-studio
-    zellij
     go
-    helix
     go-migrate
-    lazygit
     air
     goose
     gcc
@@ -140,6 +136,15 @@
     };
   };
 
+  # catppuccin
+  catppuccin = {
+    flavor = "mocha";
+    accent = "mauve";
+
+    pointerCursor.enable = true;
+    pointerCursor.accent = "light";
+  };
+
   # polybar
   services.polybar = {
     enable = true;
@@ -156,6 +161,7 @@
   # dunst
   services.dunst = {
     enable = true;
+    catppuccin.enable = true;
     configFile = ./config/dunst/dunstrc;
   };
 
@@ -176,39 +182,42 @@
   # GTK 2/3
   gtk = {
     enable = true;
-    theme = {
-      name = "Catppuccin-Mocha-Standard-Mauve-Dark";
-      package = pkgs.catppuccin-gtk.override {
-        accents = ["mauve"];
-        size = "standard";
-        variant = "mocha";
-      };
-    };
+    catppuccin.enable = true;
   };
 
-  # Set the cursor theme
-  home.file.".icons/default".source = "${pkgs.catppuccin-cursors.mochaLight}/share/icons/Catppuccin-Mocha-Light-Cursors";
-
   # application launcher
-  programs.rofi = import ./config/rofi/config.nix;
+  # TODO: check this later for clean up of other stuff >>> programs.rofi =  import ./config/rofi/config.nix;
+  programs.rofi = {
+    enable = true;
+    catppuccin.enable = true;
+    #terminal = "${pkgs.alacritty}/bin/alacritty";
+    # theme = ./catppuccin-mocha.rasi;
+  
+    extraConfig = {
+      modi = "drun";
+      show-icons = true;
+      display-drun = " Apps ";
+      drun-display-format = "{icon} {name}";
+      disable-history = false;
+      hide-scrollbar = true;
+    };
+  };
 
   # direnv
   programs.direnv.enable = true;
   programs.direnv.nix-direnv.enable = true;
  
   # fish
-  home.file.".config/fish/themes/CatppuccinMocha.theme" = {
-    source = ./config/fish/CatppuccinMocha.theme;
-  };
   programs.fish = {
     enable = true;
     interactiveShellInit = ''
       set fish_greeting # Disable greeting
-      fish_config theme choose CatppuccinMocha
       export EDITOR=hx
       # Set PATH to add .local/bin
       export PATH="$PATH:/home/nintron/.local/bin"
     '';
+
+    catppuccin.enable = true;
   };
   
   # starship
@@ -218,30 +227,64 @@
     settings = {
       add_newline = false;
     };
+    catppuccin.enable = true;
   };
 
   # alacritty
-  programs.alacritty.enable = true;
-  home.file.".config/alacritty/alacritty.toml" = {
-    source = ./config/alacritty/alacritty.toml;
-  };
-  home.file.".config/alacritty/catppuccin-mocha.toml" = {
-    source = ./config/alacritty/catppuccin-mocha.toml;
+  programs.alacritty = {
+    enable = true;
+
+    catppuccin.enable = true;
+
+    settings = {
+      window.padding = {
+        x = 6;
+        y = 6;
+      };
+      font = {
+        size = 14;
+
+        normal = {
+          family = "Fira Code";
+          style = "Regular";
+        };
+        bold = {
+          family = "Fira Code";
+          style = "Bold";
+        };
+        bold_italic = {
+          family = "Fira Code";
+          style = "Bold Italic";
+        };
+        italic = {
+          family = "Fira Code";
+          style = "Italic";
+        };
+      };
+    };
   };
 
   # helix
+  programs.helix = {
+    enable = true;
+    # catppuccin.enable = true; # Done below instead
+  };
   home.file.".config/helix" = {
     source = ./config/helix;
   };
 
-  # tmux
-  home.file.".config/tmux/tmux.conf" = {
-    source = ./config/tmux/tmux.conf;
-  };
-
   # zellij
+  programs.zellij = {
+    enable = true;
+    # catppuccin.enable = true; #Done below instead
+  };
   home.file.".config/zellij/config.kdl" = {
     source = ./config/zellij/config.kdl;
+  };
+
+  programs.lazygit = {
+    enable = true;
+    catppuccin.enable = true;
   };
 
   # lf

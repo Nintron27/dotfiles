@@ -4,6 +4,7 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
     # unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    catppuccin.url = "github:catppuccin/nix";
 
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -11,7 +12,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, ... }@inputs:
+  outputs = { self, nixpkgs, catppuccin, home-manager }@inputs:
   let
     system = "x86_64-linux";
     pkgs = import nixpkgs {
@@ -23,7 +24,6 @@
   in
   {
     nixosConfigurations = {
-        # FIXME replace with your hostname
         igneous = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs system; };
 
