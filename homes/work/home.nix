@@ -1,8 +1,5 @@
 { config, pkgs, ... }:
 
-# let
-#   customNodePackages = import ./pkgs/nodePackages/default.nix {};
-# in
 {
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
@@ -99,7 +96,6 @@
     nodePackages.typescript-language-server
     nodePackages.vscode-langservers-extracted
     nodePackages.svelte-language-server
-    # customNodePackages.svelte-language-server
     # customNodePackages."@tailwindcss/language-server"
     nodePackages.graphql-language-service-cli
     # python39Packages.pylsp-mypy
@@ -195,8 +191,6 @@
   programs.rofi = {
     enable = true;
     catppuccin.enable = true;
-    #terminal = "${pkgs.alacritty}/bin/alacritty";
-    # theme = ./catppuccin-mocha.rasi;
   
     extraConfig = {
       modi = "drun";

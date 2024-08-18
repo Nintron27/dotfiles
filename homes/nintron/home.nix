@@ -1,8 +1,5 @@
 { config, pkgs, ... }:
 
-# let
-  # customNodePackages = import ./pkgs/nodePackages/default.nix {};
-# in
 {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
