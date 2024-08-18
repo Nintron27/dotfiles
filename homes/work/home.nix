@@ -51,17 +51,13 @@
 
     # development
     git
-    tmux
     # postman
     hey
     nodejs
     handbrake
     nodePackages.prettier
-    lazygit
     lf
-    zellij
     mongodb-compass
-    helix
     ngrok
     mullvad-vpn
 
@@ -102,6 +98,7 @@
     gopls
     nodePackages.typescript-language-server
     nodePackages.vscode-langservers-extracted
+    nodePackages.svelte-language-server
     # customNodePackages.svelte-language-server
     # customNodePackages."@tailwindcss/language-server"
     nodePackages.graphql-language-service-cli
@@ -148,6 +145,15 @@
     source = ./config/i3/workspaces;
   };
 
+  # catppuccin
+  catppuccin = {
+    flavor = "mocha";
+    accent = "mauve";
+
+    pointerCursor.enable = true;
+    pointerCursor.accent = "light";
+  };
+
   # polybar
   services.polybar = {
     enable = true;
@@ -157,90 +163,10 @@
     source = ./config/polybar;
   };
 
-  # GTK 2/3
-  gtk = {
-    enable = true;
-    theme = {
-      name = "Catppuccin-Mocha-Standard-Mauve-Dark";
-      package = pkgs.catppuccin-gtk.override {
-        accents = ["mauve"];
-        size = "standard";
-        variant = "mocha";
-      };
-    };
-  };
-
-  # Set the cursor theme
-  home.file.".icons/default".source = "${pkgs.catppuccin-cursors.mochaLight}/share/icons/Catppuccin-Mocha-Light-Cursors";
-
-  # application launcher
-  programs.rofi = import ./config/rofi/config.nix;
-
-  # direnv
-  programs.direnv.enable = true;
-  programs.direnv.nix-direnv.enable = true;
- 
-  # fish
-  home.file.".config/fish/themes/CatppuccinMocha.theme" = {
-    source = ./config/fish/CatppuccinMocha.theme;
-  };
-  programs.fish = {
-    enable = true;
-    interactiveShellInit = ''
-      set fish_greeting # Disable greeting
-      fish_config theme choose CatppuccinMocha
-      export EDITOR=hx
-      # Set PATH to add .local/bin
-      export PATH="$PATH:/home/work/.local/bin"
-    '';
-  };
-  
-  # starship
-  programs.starship = {
-    enable = true;
-    enableFishIntegration = true;
-    settings = {
-      add_newline = false;
-    };
-  };
-
-  # alacritty
-  programs.alacritty.enable = true;
-  home.file.".config/alacritty/alacritty.yml" = {
-    source = ./config/alacritty/alacritty.yml;
-  };
-  home.file.".config/alacritty/catppuccin-mocha.yml" = {
-    source = ./config/alacritty/catppuccin-mocha.yml;
-  };
-
-  # helix
-  home.file.".config/helix" = {
-    source = ./config/helix;
-  };
-
-  # tmux
-  home.file.".config/tmux/tmux.conf" = {
-    source = ./config/tmux/tmux.conf;
-  };
-
-  # zellij
-  home.file.".config/zellij/config.kdl" = {
-    source = ./config/zellij/config.kdl;
-  };
-
-  # lf
-  home.file.".config/lf/lfrc" = {
-    source = ./config/lf/lfrc;
-  };
-
-  # custom scripts
-  home.file.".local/bin" = {
-    source = ./scripts;
-  };
-
   # dunst
   services.dunst = {
     enable = true;
+    catppuccin.enable = true;
     configFile = ./config/dunst/dunstrc;
   };
 
@@ -256,5 +182,123 @@
       day = 5500;
       night = 3700;
     };
+  };
+
+  # GTK 2/3
+  gtk = {
+    enable = true;
+    catppuccin.enable = true;
+  };
+
+  # application launcher
+  # TODO: check this later for clean up of other stuff >>> programs.rofi =  import ./config/rofi/config.nix;
+  programs.rofi = {
+    enable = true;
+    catppuccin.enable = true;
+    #terminal = "${pkgs.alacritty}/bin/alacritty";
+    # theme = ./catppuccin-mocha.rasi;
+  
+    extraConfig = {
+      modi = "drun";
+      show-icons = true;
+      display-drun = " Apps ";
+      drun-display-format = "{icon} {name}";
+      disable-history = false;
+      hide-scrollbar = true;
+    };
+  };
+
+  # direnv
+  programs.direnv.enable = true;
+  programs.direnv.nix-direnv.enable = true;
+ 
+  # fish
+  programs.fish = {
+    enable = true;
+    interactiveShellInit = ''
+      set fish_greeting # Disable greeting
+      export EDITOR=hx
+      # Set PATH to add .local/bin
+      export PATH="$PATH:/home/nintron/.local/bin"
+    '';
+
+    catppuccin.enable = true;
+  };
+  
+  # starship
+  programs.starship = {
+    enable = true;
+    enableFishIntegration = true;
+    settings = {
+      add_newline = false;
+    };
+    catppuccin.enable = true;
+  };
+
+  # alacritty
+  programs.alacritty = {
+    enable = true;
+
+    catppuccin.enable = true;
+
+    settings = {
+      window.padding = {
+        x = 6;
+        y = 6;
+      };
+      font = {
+        size = 14;
+
+        normal = {
+          family = "Fira Code";
+          style = "Regular";
+        };
+        bold = {
+          family = "Fira Code";
+          style = "Bold";
+        };
+        bold_italic = {
+          family = "Fira Code";
+          style = "Bold Italic";
+        };
+        italic = {
+          family = "Fira Code";
+          style = "Italic";
+        };
+      };
+    };
+  };
+
+  # helix
+  programs.helix = {
+    enable = true;
+    # catppuccin.enable = true; # Done below instead
+  };
+  home.file.".config/helix" = {
+    source = ./config/helix;
+  };
+
+  # zellij
+  programs.zellij = {
+    enable = true;
+    # catppuccin.enable = true; #Done below instead
+  };
+  home.file.".config/zellij/config.kdl" = {
+    source = ./config/zellij/config.kdl;
+  };
+
+  programs.lazygit = {
+    enable = true;
+    catppuccin.enable = true;
+  };
+
+  # lf
+  home.file.".config/lf/lfrc" = {
+    source = ./config/lf/lfrc;
+  };
+
+  # custom scripts
+  home.file.".local/bin" = {
+    source = ./scripts;
   };
 }

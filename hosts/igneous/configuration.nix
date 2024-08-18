@@ -140,15 +140,14 @@
   # Homemanager module
   home-manager = {
     extraSpecialArgs = { inherit inputs; };
-    users = {
-      nintron = {
-        imports = [
-          ../../homes/nintron/home.nix
-          inputs.catppuccin.homeManagerModules.catppuccin
-        ];
-      };
-      work = import ../../homes/work/home.nix;
-    };
+    users.nintron.imports = [
+      ../../homes/nintron/home.nix
+      inputs.catppuccin.homeManagerModules.catppuccin
+    ];
+    users.work.imports = [
+      ../../homes/work/home.nix
+      inputs.catppuccin.homeManagerModules.catppuccin
+    ];
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
