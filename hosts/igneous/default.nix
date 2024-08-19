@@ -1,3 +1,4 @@
+
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
@@ -6,13 +7,10 @@
 
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [
       ./hardware-configuration.nix
 
-      # Catppuccin!
-      inputs.catppuccin.nixosModules.catppuccin
-
-      inputs.home-manager.nixosModules.home-manager
+      ../common/global
     ];
 
   # Bootloader.
@@ -32,21 +30,6 @@
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
   networking.hostName = "igneous"; # Define your hostname
-
-  # Enable experimental features
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
-  # Enable networking
-  networking.networkmanager.enable = true;
-
-  # Stuff for VPN
-  #networking.firewall.checkReversePath = "loose";
-  networking.wireguard.enable = true;
-  services.mullvad-vpn.enable = true; # Sets checkReversPath for you
 
   # Enable printing
   services.printing.enable = true;
@@ -74,51 +57,8 @@
     LC_TIME = "en_US.UTF-8";
   };
 
-  # Pipewire :D
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
-  };
-
-  # pulseaudio
-  # hardware.pulseaudio.enable = true;
-  # hardware.pulseaudio.daemon.config = {
-  #   flat-volumes = "no";
-  #   resample-method = "speex-float-5";
-  #   default-sample-format = "s32le";
-  #   default-sample-rate = 48000;
-  #   alternate-sample-rate = 44100;
-  # };
-
   # rtl-sdr
   services.udev.packages = [ pkgs.rtl-sdr ];
-
-  # ZSA udev rules
-  services.udev.extraRules = ''
-    # Rules for Oryx web flashing and live training
-    KERNEL=="hidraw*", ATTRS{idVendor}=="16c0", MODE="0664", GROUP="plugdev"
-    KERNEL=="hidraw*", ATTRS{idVendor}=="3297", MODE="0664", GROUP="plugdev"
-
-    # Legacy rules for live training over webusb (Not needed for firmware v21+)
-      # Rule for all ZSA keyboards
-      SUBSYSTEM=="usb", ATTR{idVendor}=="3297", GROUP="plugdev"
-      # Rule for the Moonlander
-      SUBSYSTEM=="usb", ATTR{idVendor}=="3297", ATTR{idProduct}=="1969", GROUP="plugdev"
-
-    # Keymapp / Wally Flashing rules for the Moonlander and Planck EZ
-    SUBSYSTEMS=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="df11", MODE:="0666", SYMLINK+="stm32_dfu"
-    # Keymapp Flashing rules for the Voyager
-    SUBSYSTEMS=="usb", ATTRS{idVendor}=="3297", MODE:="0666", SYMLINK+="ignition_dfu"
-  '';
-
-  # bluetooth
-  hardware.bluetooth.enable = true;
-  services.blueman.enable = true;
 
   # logitech
   hardware.logitech.wireless = {
@@ -131,11 +71,6 @@
     layout = "us";
     xkbVariant = "";
   };
-
-  # List packages installed in system profile. To search, run:
-  # environment.systemPackages = with pkgs; [
-    # home-manager
-  # ];
 
   # Homemanager module
   home-manager = {

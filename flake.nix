@@ -12,23 +12,18 @@
     };
   };
 
-  outputs = { self, nixpkgs, catppuccin, home-manager }@inputs:
+  outputs = { self, nixpkgs, catppuccin, home-manager, ... }@inputs:
   let
-    system = "x86_64-linux";
-    pkgs = import nixpkgs {
-      inherit system;
-      config = {
-        allowUnfree = true;
-      };
-    };
+    inherit (self) outputs;
   in
   {
     nixosConfigurations = {
         igneous = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs system; };
+          system = "x86_64-linux";
+          specialArgs = { inherit inputs outputs; };
 
           modules = [
-            ./hosts/igneous/configuration.nix
+            ./hosts/igneous
           ];
         };
       };
