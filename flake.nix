@@ -13,14 +13,11 @@
   };
 
   outputs = { self, nixpkgs, catppuccin, home-manager, ... }@inputs:
-  let
-    inherit (self) outputs;
-  in
   {
     nixosConfigurations = {
         igneous = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          specialArgs = { inherit inputs outputs; };
+          specialArgs = { inherit inputs; };
 
           modules = [
             ./hosts/igneous
