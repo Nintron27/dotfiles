@@ -3,7 +3,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ inputs, config, pkgs, ... }:
+{ inputs, config, pkgs, pkgs-unstable, ... }:
 
 {
   imports =
@@ -74,7 +74,10 @@
 
   # Homemanager module
   home-manager = {
-    extraSpecialArgs = { inherit inputs; };
+    extraSpecialArgs = { 
+      inherit inputs;
+      inherit pkgs-unstable;
+    };
     users.nintron.imports = [
       ../../homes/nintron/home.nix
       inputs.catppuccin.homeManagerModules.catppuccin
@@ -90,7 +93,6 @@
     isNormalUser = true;
     description = "nintron";
     extraGroups = [ "networkmanager" "wheel" "audio" "plugdev" ];
-    packages = with pkgs; [];
   };
   users.users.work = {
     isNormalUser = true;

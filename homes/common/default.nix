@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, pkgs-unstable, ... }:
 
 {
   imports = [
@@ -160,6 +160,7 @@
     obs-studio
 
     # Development
+    pkgs-unstable.valkey
     gnumake
     git
     hey

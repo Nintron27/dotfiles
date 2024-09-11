@@ -3,7 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
-    # unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     catppuccin.url = "github:catppuccin/nix";
 
     home-manager = {
@@ -12,17 +12,24 @@
     };
   };
 
-  outputs = { self, nixpkgs, catppuccin, home-manager, ... }@inputs:
+  outputs = inputs@{ self, nixpkgs, nixpkgs-unstable, catppuccin, home-manager, ... }:
   {
     nixosConfigurations = {
-        igneous = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          specialArgs = { inherit inputs; };
+      igneous = nixpkgs.lib.nixosSystem rec {
+        system = "x86_64-linux";
 
-          modules = [
-            ./hosts/igneous
-          ];
+        specialArgs = { 
+          inherit inputs;
+          pkgs-unstable = import nixpkgs-unstable {
+            inherit system;
+            config.allowUnfree = true;
+          };
         };
+
+        modules = [
+          ./hosts/igneous
+        ];
       };
+    };
   };
 }
