@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ inputs, config, pkgs, ... }:
 
 {
   imports = [
@@ -13,6 +13,17 @@
   ###########################
   # Packages and/or Configs #
   ###########################
+
+  wayland.windowManager.hyprland = {
+    enable = true;
+    # set the flake package
+    # package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+
+    settings = import ../common/hyprland.nix;
+
+    catppuccin.enable = true;
+  };
+  home.sessionVariables.NIXOS_OZONE_WL = "1";
 
   # window manager
   xsession = {

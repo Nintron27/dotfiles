@@ -113,6 +113,17 @@
 
   # List services that you want to enable:
 
+  
+    services.displayManager.sddm = {
+      enable = true;
+      catppuccin = {
+        enable = true;
+        font = "Fira Code";
+      };
+      # Fix wrong Qt version
+      package = pkgs.kdePackages.sddm;
+    };
+
   # xserver
   services.xserver = {
     enable = true;
@@ -128,17 +139,17 @@
 
     videoDrivers = [ "nvidia" ];
 
-    displayManager.lightdm = {
-      enable = true;
-      greeters.gtk = {
-        enable = true;
-        cursorTheme = {
-          package = pkgs.catppuccin-cursors.mochaLight;
-          name = "catppuccin-mocha-dark-cursors";
-          size = 24;
-        };
-      };
-    };
+    # displayManager.lightdm = {
+    #   enable = true;
+    #   greeters.gtk = {
+    #     enable = true;
+    #     cursorTheme = {
+    #       package = pkgs.catppuccin-cursors.mochaLight;
+    #       name = "catppuccin-mocha-dark-cursors";
+    #       size = 24;
+    #     };
+    #   };
+    # };
 
     # disable mouse acceleration
     libinput = {
@@ -157,6 +168,10 @@
     ];
   };
   hardware.opengl.enable = true;
+
+  # nvidia crap
+  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
+  hardware.nvidia.modesetting.enable = true;
 
   # GVFS for Samba
   services.gvfs.enable = true;

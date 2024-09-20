@@ -77,6 +77,7 @@
   programs.rofi = {
     enable = true;
     catppuccin.enable = true;
+    package = pkgs.rofi-wayland;
   
     extraConfig = {
       modi = "drun";
@@ -118,6 +119,7 @@
     i3lock
     playerctl
     feh
+    swaybg
 
     # fonts
     fira-code
