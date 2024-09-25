@@ -13,6 +13,12 @@
       ../common/global
     ];
 
+  # Catppuccin
+  catppuccin = {
+    flavor = "mocha";
+    accent = "mauve";
+  };
+
   # Bootloader.
   boot.loader.grub = {
     enable = true;
@@ -23,13 +29,15 @@
 
     catppuccin = {
       enable = true;
-      flavor = "mocha";
     };
   };
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
   networking.hostName = "igneous"; # Define your hostname
+
+  # Catppuccin for console
+  console.catppuccin.enable = true;
 
   # Enable printing
   services.printing.enable = true;
@@ -72,6 +80,9 @@
     xkbVariant = "";
   };
 
+  # PAM
+  security.pam.services.hyprlock = {};
+
   # Homemanager module
   home-manager = {
     extraSpecialArgs = { 
@@ -86,6 +97,7 @@
       ../../homes/work/home.nix
       inputs.catppuccin.homeManagerModules.catppuccin
     ];
+    # backupFileExtension = "hm-backup";
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
@@ -103,53 +115,20 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
-
-  # List services that you want to enable:
-
-  
-    services.displayManager.sddm = {
+  services.displayManager.sddm = {
+    enable = true;
+    catppuccin = {
       enable = true;
-      catppuccin = {
-        enable = true;
-        font = "Fira Code";
-      };
-      # Fix wrong Qt version
-      package = pkgs.kdePackages.sddm;
+      font = "Fira Code";
     };
+    # Fix wrong Qt version
+    package = pkgs.kdePackages.sddm;
+  };
 
   # xserver
   services.xserver = {
     enable = true;
-    exportConfiguration = true;
-    dpi = 100;
-    screenSection = ''
-      Monitor        "Monitor[0]"
-      DefaultDepth    24
-      Option         "Stereo" "0"
-      Option         "nvidiaXineramaInfoOrder" "DFP-4"
-      Option         "metamodes" "DP-2: 2560x1440_144 +1920+0 {ForceCompositionPipeline=On, ForceFullCompositionPipeline=On}, DP-0: 1920x1080_144 +0+360 {ForceCompositionPipeline=On, ForceFullCompositionPipeline=On}"
-    '';
-
-    videoDrivers = [ "nvidia" ];
-
-    # displayManager.lightdm = {
-    #   enable = true;
-    #   greeters.gtk = {
-    #     enable = true;
-    #     cursorTheme = {
-    #       package = pkgs.catppuccin-cursors.mochaLight;
-    #       name = "catppuccin-mocha-dark-cursors";
-    #       size = 24;
-    #     };
-    #   };
-    # };
+    videoDrivers = [ "amdgpu" ];
 
     # disable mouse acceleration
     libinput = {
@@ -169,10 +148,6 @@
   };
   hardware.opengl.enable = true;
 
-  # nvidia crap
-  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
-  hardware.nvidia.modesetting.enable = true;
-
   # GVFS for Samba
   services.gvfs.enable = true;
 
@@ -187,15 +162,6 @@
   programs.steam = {
     enable = true;
   };
-
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

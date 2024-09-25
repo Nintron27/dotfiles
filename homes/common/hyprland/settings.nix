@@ -2,16 +2,12 @@
 {
   # Monitors
   "monitor" = [
-    "DP-1, 1920x1080@143.85, 0x360, 1"
-    "DP-2, 2560x1440@144, 1920x0, 1"
-    "Unknown-1, disable" # Thank Nvidia
+    "DP-1, 2560x1440@144, 0x0, 1"
+    "DP-2, 1920x1080@143.85, -1920x360, 1"
   ];
 
   # Env variables
   env = [
-    "GBM_BACKEND,nvidia-drm"
-    "__GLX_VENDOR_LIBRARY_NAME,nvidia"
-
     "ELECTRON_OZONE_PLATFORM_HINT,auto"
   ];
 
@@ -20,7 +16,9 @@
 
   # Startup actions
   "exec-once" = [
-    "swaybg -i ~/.config/wallpaper.png"
+    "hyprpaper" # TODO: Unload preloaded after? idk
+    "solaar -w hide"
+    "waybar"
   ];
 
   # Look & Feel
@@ -28,7 +26,7 @@
     resize_on_border = true;
   };
   decoration = {
-    rounding = 4;
+    rounding = 6;
 
     blur = {
       enabled = false;
@@ -50,7 +48,11 @@
     "$mainMod, r, exec, rofi -show drun"
     "$mainMod, Return, exec, alacritty"
     "$mainMod, q, killactive"
+    "$mainMod, l, exec, hyprlock"
     "$mainMod SHIFT, x, exit"
+
+    # Shortcuts
+    ", Print, exec, grim -g \"$(slurp -d)\" - | wl-copy"
 
     # Move focus
     "$mainMod, n, movefocus, l"
@@ -93,15 +95,19 @@
 
   ];
 
-  # Media
   bindel = [
+    # Volume
     ", XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
     ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+    ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
   ];
   bindl = [
+    # Playerctl
     ", XF86AudioPlay, exec, playerctl play-pause"
     ", XF86AudioNext, exec, playerctl next"
     ", XF86AudioPrev, exec, playerctl previous"
+
+    "$mainMod SHIFT, s, exec, systemctl suspend"
   ];
 
   # Mouse binds
@@ -113,15 +119,26 @@
   # Window Rules
   windowrulev2 = [
     "float, class:(org.gnome.Nautilus)"
+
+    # Picture in picture
+    "float, title:(Picture in picture)"
+    "pin, title:(Picture in picture)"
+    "size 800 450, title:(Picture in picture)"
+    "keepaspectratio, title:(Picture in picture)"
   ];
 
   # Workspace
   workspace = [
-    "1, monitor:DP-2, default:true"
-    "2, monitor:DP-2"
-    "3, monitor:DP-2"
-    "4, monitor:DP-2"
-    "4, monitor:DP-2"
-    "0, monitor:DP-1, default:true"
+    "1, monitor:DP-1, default:true"
+    "2, monitor:DP-1"
+    "3, monitor:DP-1"
+    "4, monitor:DP-1"
+    "5, monitor:DP-1"
+    "10, monitor:DP-2, default:true"
   ];
+
+  misc = {
+    disable_hyprland_logo = true;
+    disable_splash_rendering = true;
+  };
 }

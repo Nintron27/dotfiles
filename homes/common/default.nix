@@ -3,6 +3,8 @@
 {
   imports = [
     ./alacritty.nix
+    ./hyprland
+    ./waybar
     ./helix
     ./zellij
     ./lf
@@ -39,7 +41,8 @@
         shrink = "no";
         separator_height = 2;
         padding = 6;
-        horizontal_padding = 8;
+        horizontal_padding = 6;
+        corner_radius = 6;
         frame_width = 2;
         sort = "yes";
         idle_threshold = 120;
@@ -49,12 +52,13 @@
         show_age_threshold = 60;
 
         max_icon_size = 56;
+        icon_corner_radius = 6;
       };
     };
   };
 
-  # redshift
-  services.redshift = {
+  # gammastep
+  services.gammastep = {
     enable = true;
     tray = true;
 
@@ -67,11 +71,20 @@
     };
   };
 
+
   # GTK 2/3
   gtk = {
     enable = true;
     catppuccin.enable = true;
   };
+
+  # QT, sadly breaks XDPH currently
+  # qt = {
+  #   enable = true;
+  #   platformTheme.name = "kvantum";
+  #   style.name = "kvantum";
+  #   style.catppuccin.enable = true;
+  # };
 
   # TODO: check this later for clean up of other stuff >>> programs.rofi =  import ./config/rofi/config.nix;
   programs.rofi = {
@@ -119,7 +132,9 @@
     i3lock
     playerctl
     feh
-    swaybg
+    grim
+    slurp
+    wl-clipboard
 
     # fonts
     fira-code
@@ -153,6 +168,7 @@
     rtl-sdr-osmocom
     signal-desktop
     discord
+    vesktop
     r2modman
     # slack
     jdk17_headless

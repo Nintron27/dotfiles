@@ -11,7 +11,7 @@
         y = 6;
       };
       font = {
-        size = 14;
+        size = 16;
 
         normal = {
           family = "Fira Code";
