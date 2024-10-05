@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, pkgs-unstable, ... }:
 
 {
   imports = [
@@ -14,10 +14,12 @@
   # Packages to install
   home.packages = with pkgs; [
     # development
+    pkgs-unstable.shopify-cli
     handbrake
     ngrok
 
     # un-categorized packages
+    openssl
     qpaeq
     chromium
     slack

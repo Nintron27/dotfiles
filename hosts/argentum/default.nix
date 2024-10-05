@@ -22,7 +22,6 @@
   # Bootloader.
   boot.loader.grub = {
     enable = true;
-    # version = 2;
     device = "nodev";
     useOSProber = true;
     efiSupport = true;
@@ -34,7 +33,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
-  networking.hostName = "igneous"; # Define your hostname
+  networking.hostName = "argentum"; # Define your hostname
 
   # Catppuccin for console
   console.catppuccin.enable = true;
@@ -55,15 +54,6 @@
     LC_PAPER = "en_US.UTF-8";
     LC_TELEPHONE = "en_US.UTF-8";
     LC_TIME = "en_US.UTF-8";
-  };
-
-  # rtl-sdr
-  services.udev.packages = [ pkgs.rtl-sdr ];
-
-  # logitech
-  hardware.logitech.wireless = {
-    enable = true;
-    enableGraphical = true;
   };
 
   # Configure keymap in X11
@@ -120,17 +110,14 @@
   # libinput
   services.libinput = {
     enable = true;
-    mouse.accelProfile = "flat";
   };
 
   # xserver
   services.xserver = {
     enable = true;
-    videoDrivers = [ "amdgpu" ];
 
     desktopManager.xterm.enable = false;
   };
-  hardware.opengl.enable = true;
 
   # GVFS for Samba
   services.gvfs.enable = true;
@@ -141,11 +128,6 @@
   # Enable FISH systemwide
   programs.fish.enable = true;
   users.defaultUserShell = pkgs.fish;
-
-  # Steam
-  programs.steam = {
-    enable = true;
-  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
