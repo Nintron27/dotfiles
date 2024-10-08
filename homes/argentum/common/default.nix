@@ -132,7 +132,6 @@
     i3lock
     playerctl
     brightnessctl
-    lxqt.lxqt-policykit
     feh
     grim
     slurp
