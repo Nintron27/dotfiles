@@ -1,0 +1,79 @@
+{
+    "border": "pixel",
+    "current_border_width": 2,
+    "floating": "auto_off",
+    "geometry": {
+        "height": 1043,
+        "width": 1145,
+        "x": 19,
+        "y": 378
+    },
+    "marks": [],
+    "name": "Discord",
+    "percent": 0.61,
+    "swallows": [
+        {
+            "class": "^discord$",
+            "instance": "^discord$",
+            "title": "^Friends\\ \\-\\ Discord$",
+            "window_role": "^browser\\-window$"
+        }
+    ],
+    "type": "con"
+}
+
+{
+    "border": "pixel",
+    "floating": "auto_off",
+    "layout": "splitv",
+    "marks": [],
+    "percent": 0.39,
+    "type": "con",
+    "nodes": [
+        {
+            "border": "pixel",
+            "current_border_width": 2,
+            "floating": "auto_off",
+            "geometry": {
+                "height": 600,
+                "width": 800,
+                "x": 0,
+                "y": 0
+            },
+            "marks": [],
+            "name": "Spotify",
+            "percent": 0.67,
+            "swallows": [
+                {
+                    "class": "^Spotify$",
+                    "instance": "^spotify$",
+                    "title": "^Spotify$"
+                }
+            ],
+            "type": "con"
+        },
+        {
+            "border": "pixel",
+            "current_border_width": 2,
+            "floating": "auto_off",
+            "geometry": {
+                "height": 1043,
+                "width": 614,
+                "x": 19,
+                "y": 378
+            },
+            "marks": [],
+            "name": "Google Meet - Brave",
+            "percent": 0.33,
+            "swallows": [
+                {
+                    "class": "^Brave\\-browser$",
+                    "instance": "^brave\\-browser$",
+                    "title": "^Google\\ Meet\\ \\-\\ Brave$",
+                    "window_role": "^browser$"
+                }
+            ],
+            "type": "con"
+        }
+    ]
+}

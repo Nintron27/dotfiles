@@ -1,0 +1,33 @@
+[[language]]
+name = "svelte"
+indent = { tab-width = 4, unit = "\t" }
+auto-format = true
+roots = ["svelte.config.js"]
+# formatter: the svelteserver LSP automatically uses prettier (I think)
+language-servers = ["svelteserver", "tailwindcss-ls"]
+
+[[language]]
+name = "javascript"
+indent = { tab-width = 4, unit = "\t" }
+auto-format = true
+formatter = { command = "prettier", args = ["--parser", "javascript"] }
+
+[[language]]
+name = "typescript"
+indent = { tab-width = 4, unit = "\t" }
+auto-format = true
+formatter = { command = "prettier", args = ["--parser", "typescript"] }
+
+[[language]]
+name = "graphql"
+comment-token = "#"
+indent = { tab-width = 4, unit = "\t" }
+
+[[language]]
+name = "toml"
+auto-format = true
+indent = { tab-width = 4, unit = "\t" }
+
+[[language]]
+name = "json"
+indent = { tab-width = 4, unit = "\t" }

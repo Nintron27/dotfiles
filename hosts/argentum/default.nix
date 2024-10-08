@@ -31,12 +31,14 @@
     };
   };
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.efi.efiSysMountPoint = "/boot/efi";
+  # boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
   networking.hostName = "argentum"; # Define your hostname
 
   # Catppuccin for console
   console.catppuccin.enable = true;
+
+  # security.polkit.enable = true;
 
   # Set your time zone.
   time.timeZone = "America/New_York";
@@ -56,6 +58,11 @@
     LC_TIME = "en_US.UTF-8";
   };
 
+  systemd.sleep.extraConfig = ''
+    HibernateDelaySec=3600s
+  '';
+  services.logind.lidSwitch = "suspend-then-hibernate";
+
   # Configure keymap in X11
   services.xserver = {
     xkb.layout = "us";
@@ -72,11 +79,11 @@
       inherit pkgs-unstable;
     };
     users.nintron.imports = [
-      ../../homes/nintron/home.nix
+      ../../homes/argentum/nintron/home.nix
       inputs.catppuccin.homeManagerModules.catppuccin
     ];
     users.work.imports = [
-      ../../homes/work/home.nix
+      ../../homes/argentum/work/home.nix
       inputs.catppuccin.homeManagerModules.catppuccin
     ];
     # backupFileExtension = "hm-backup";
@@ -118,6 +125,16 @@
 
     desktopManager.xterm.enable = false;
   };
+
+  services.fwupd.enable = true;
+  # we need fwupd 1.9.7 to downgrade the fingerprint sensor firmware
+  services.fwupd.package = (import (builtins.fetchTarball {
+    url = "https://github.com/NixOS/nixpkgs/archive/bb2009ca185d97813e75736c2b8d1d8bb81bde05.tar.gz";
+    sha256 = "sha256:003qcrsq5g5lggfrpq31gcvj82lb065xvr7bpfa8ddsw8x4dnysk";
+  }) {
+    inherit (pkgs) system;
+  }).fwupd;
+
 
   # GVFS for Samba
   services.gvfs.enable = true;
