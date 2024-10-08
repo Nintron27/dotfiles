@@ -132,7 +132,7 @@
     i3lock
     playerctl
     brightnessctl
-    kdePackages.polkit-kde-agent-1
+    lxqt.lxqt-policykit
     feh
     grim
     slurp

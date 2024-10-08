@@ -38,7 +38,7 @@
   # Catppuccin for console
   console.catppuccin.enable = true;
 
-  # security.polkit.enable = true;
+  security.polkit.enable = true;
 
   # Set your time zone.
   time.timeZone = "America/New_York";

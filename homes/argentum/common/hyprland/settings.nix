@@ -19,6 +19,7 @@
     "solaar -w hide"
     "blueman-applet"
     "waybar"
+    "lxqt-policykit-agent"
   ];
 
   # Look & Feel
