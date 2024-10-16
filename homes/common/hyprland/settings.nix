@@ -1,5 +1,5 @@
 # All my Hyprland settings
-{
+{ config, ...}: {
   # Monitors
   "monitor" = [
     "DP-1, 2560x1440@144, 0x0, 1"
@@ -19,7 +19,14 @@
     "hyprpaper" # TODO: Unload preloaded after? idk
     "solaar -w hide"
     "waybar"
-  ];
+  ] ++ (if config.hyprlandSettings.workAutostart then [
+    "[workspace 1 silent] brave"
+    "[workspace 2 silent] alacritty"
+    "[workspace 3 silent] codium"
+    "[workspace 4 silent] obsidian"
+    "[workspace 5 silent] slack"
+    "[workspace 10 silent] vesktop"
+  ] else []);
 
   # Look & Feel
   general = {

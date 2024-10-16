@@ -1,20 +1,25 @@
-{ pkgs, pkgs-unstable, ... }:
-
+{ pkgs, pkgs-unstable, username, ... }:
 {
   imports = [
     ./alacritty.nix
     ./hyprland
+    ./dunst
     ./waybar
     ./helix
     ./zellij
     ./lf
   ];
 
+  home.stateVersion = "23.11";
+
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.allowBroken= true;
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
+
+  home.username = username;
+  home.homeDirectory = "/home/${username}";
 
   # Enable finding installed fonts
   fonts.fontconfig.enable = true;
@@ -26,35 +31,6 @@
 
     pointerCursor.enable = true;
     pointerCursor.accent = "light";
-  };
-
-  # dunst
-  services.dunst = {
-    enable = true;
-    catppuccin.enable = true;
-    # configFile = ./config/dunst/dunstrc;
-    settings = {
-      global = {
-        monitor = 0;
-        geometry = "0x0-20+35";
-        indicate_hidden = "yes";
-        shrink = "no";
-        separator_height = 2;
-        padding = 6;
-        horizontal_padding = 6;
-        corner_radius = 6;
-        frame_width = 2;
-        sort = "yes";
-        idle_threshold = 120;
-
-        font = "Fira Code 12";
-
-        show_age_threshold = 60;
-
-        max_icon_size = 56;
-        icon_corner_radius = 6;
-      };
-    };
   };
 
   # gammastep
@@ -100,6 +76,19 @@
       disable-history = false;
       hide-scrollbar = true;
     };
+  };
+
+  # fish
+  programs.fish = {
+    enable = true;
+    interactiveShellInit = ''
+      set fish_greeting # Disable greeting
+      export EDITOR=hx
+      # Set PATH to add .local/bin
+      export PATH="$PATH:/home/${username}/.local/bin"
+    '';
+
+    catppuccin.enable = true;
   };
 
   # direnv

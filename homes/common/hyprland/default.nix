@@ -1,24 +1,37 @@
+{ lib, config, ...}:
 {
-  wayland.windowManager.hyprland = {
-    enable = true;
-
-    settings = import ./settings.nix;
-
-    catppuccin.enable = true;
+  options.hyprlandSettings = {
+    workAutostart = lib.mkOption {
+      default = false;
+      type = lib.types.bool;
+      description = ''
+        Enable autostart applications for work profile
+      '';
+    };
   };
 
-  programs.hyprlock.enable = true;
-  home.file.".config/hypr/hyprlock.conf".source = ./hyprlock/hyprlock.conf;
-  home.file.".config/hypr/mocha.conf".source = ./hyprlock/mocha.conf;
+  config = {
+    wayland.windowManager.hyprland = {
+      enable = true;
 
-  home.sessionVariables.NIXOS_OZONE_WL = "1";
+      settings = import ./settings.nix { inherit config; };
 
-  services.hyprpaper = {
-    enable = true;
-    settings = {
-      splash = false;
-      preload = "$HOME/.config/wallpaper.png";
-      wallpaper = ", $HOME/.config/wallpaper.png";
+      catppuccin.enable = true;
+    };
+
+    programs.hyprlock.enable = true;
+    home.file.".config/hypr/hyprlock.conf".source = ./hyprlock/hyprlock.conf;
+    home.file.".config/hypr/mocha.conf".source = ./hyprlock/mocha.conf;
+
+    home.sessionVariables.NIXOS_OZONE_WL = "1";
+
+    services.hyprpaper = {
+      enable = true;
+      settings = {
+        splash = false;
+        preload = "$HOME/.config/wallpaper.png";
+        wallpaper = ", $HOME/.config/wallpaper.png";
+      };
     };
   };
 }
