@@ -10,19 +10,13 @@
     [
       ./hardware-configuration.nix
 
-      ../common/global
+      ../common
+      ../features/logitech.nix
     ];
-
-  # Catppuccin
-  catppuccin = {
-    flavor = "mocha";
-    accent = "mauve";
-  };
 
   # Bootloader.
   boot.loader.grub = {
     enable = true;
-    # version = 2;
     device = "nodev";
     useOSProber = true;
     efiSupport = true;
@@ -36,8 +30,6 @@
 
   networking.hostName = "igneous"; # Define your hostname
 
-  # Catppuccin for console
-  console.catppuccin.enable = true;
 
   # Set your time zone.
   time.timeZone = "America/New_York";
@@ -59,12 +51,6 @@
 
   # rtl-sdr
   services.udev.packages = [ pkgs.rtl-sdr ];
-
-  # logitech
-  hardware.logitech.wireless = {
-    enable = true;
-    enableGraphical = true;
-  };
 
   # Configure keymap in X11
   services.xserver = {
@@ -103,9 +89,6 @@
     description = "work";
     extraGroups = [ "networkmanager" "wheel" "audio" ];
   };
-
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
 
   services.displayManager.sddm = {
     enable = true;

@@ -8,6 +8,8 @@
 
     ./nix.nix
     ./hyprland.nix
+    ./fish.nix
+    ./catppuccin.nix
     ./networking.nix
     ./pipewire.nix
     ./zsa-board.nix

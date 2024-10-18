@@ -10,14 +10,8 @@
     [
       ./hardware-configuration.nix
 
-      ../common/global
+      ../common
     ];
-
-  # Catppuccin
-  catppuccin = {
-    flavor = "mocha";
-    accent = "mauve";
-  };
 
   # Bootloader.
   boot.loader.grub = {
@@ -34,9 +28,6 @@
   # boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
   networking.hostName = "argentum"; # Define your hostname
-
-  # Catppuccin for console
-  console.catppuccin.enable = true;
 
   # security.polkit.enable = true;
 
@@ -101,9 +92,6 @@
     extraGroups = [ "networkmanager" "wheel" "audio" ];
   };
 
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
-
   services.displayManager.sddm = {
     enable = true;
     catppuccin = {
@@ -141,10 +129,6 @@
 
   # dconf for Gnome packages
   programs.dconf.enable = true;
-
-  # Enable FISH systemwide
-  programs.fish.enable = true;
-  users.defaultUserShell = pkgs.fish;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
