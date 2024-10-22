@@ -66,6 +66,7 @@
     extraSpecialArgs = { 
       inherit inputs;
       inherit pkgs-unstable;
+      isArgentum = false;
     };
     users.nintron.imports = [
       ../../homes/nintron/home.nix

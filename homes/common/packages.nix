@@ -9,7 +9,7 @@
       '';
     };
     enableArgentum = lib.mkOption {
-      default = false;
+      default = config.isArgentum;
       type = lib.types.bool;
       description = ''
         Enable argentum specific packages

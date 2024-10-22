@@ -68,6 +68,7 @@
     extraSpecialArgs = { 
       inherit inputs;
       inherit pkgs-unstable;
+      isArgentum = true;
     };
     users.nintron.imports = [
       ../../homes/nintron/home.nix
@@ -91,9 +92,6 @@
     description = "work";
     extraGroups = [ "networkmanager" "wheel" "audio" ];
   };
-
-  isArgentum = true;
-  packageConfiguration.enableArgentum = true;
 
   # libinput
   services.libinput = {
