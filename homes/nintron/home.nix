@@ -1,7 +1,9 @@
-{ pkgs, pkgs-unstable, ... }:
+{ pkgs, pkgs-unstable, lib, ... }:
 
 {
   imports = [
-    (import ../common { inherit pkgs pkgs-unstable; username = "nintron"; } )
+    (import ../common { inherit pkgs pkgs-unstable lib; username = "nintron"; } )
   ];
+
+  packageConfiguration.enablePersonal = true;
 }

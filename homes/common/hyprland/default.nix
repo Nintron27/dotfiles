@@ -14,10 +14,12 @@
     wayland.windowManager.hyprland = {
       enable = true;
 
-      settings = import ./settings.nix { inherit config; };
+      settings = import ./settings.nix { inherit config lib; };
 
       catppuccin.enable = true;
     };
+
+    home.pointerCursor.size = if config.isArgentum then 24 else 32;
 
     programs.hyprlock.enable = true;
     home.file.".config/hypr/hyprlock.conf".source = ./hyprlock/hyprlock.conf;
@@ -31,6 +33,28 @@
         splash = false;
         preload = "$HOME/.config/wallpaper.png";
         wallpaper = ", $HOME/.config/wallpaper.png";
+      };
+    };
+    services.hypridle = {
+      enable = true;
+      settings = {
+        general = {
+          lock_cmd = "pidof hyprlock || hyprlock";
+          before_sleep_cmd = "loginctl lock-session";
+          after_sleep_cmd = "hyprctl dispatch dpms on";
+        };
+
+        listener = lib.optionalAttrs config.isArgentum [
+            {
+              timeout = 300; # 300
+              on-timeout = "brightnessctl -s set 0";
+              on-resume = "brightnessctl -r";
+            }
+            {
+              timeout = 330;
+              on-timeout = "systemctl suspend-then-hibernate";
+            }
+          ];
       };
     };
   };

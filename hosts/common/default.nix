@@ -8,6 +8,7 @@
 
     ./nix.nix
     ./hyprland.nix
+    ./sddm.nix
     ./fish.nix
     ./catppuccin.nix
     ./networking.nix

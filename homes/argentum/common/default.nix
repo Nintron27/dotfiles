@@ -131,7 +131,7 @@
     qpwgraph
     i3lock
     playerctl
-    brightnessctl
+    brightnessctl # Laptop only
     feh
     grim
     slurp

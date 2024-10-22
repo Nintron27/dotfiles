@@ -70,11 +70,11 @@
       inherit pkgs-unstable;
     };
     users.nintron.imports = [
-      ../../homes/argentum/nintron/home.nix
+      ../../homes/nintron/home.nix
       inputs.catppuccin.homeManagerModules.catppuccin
     ];
     users.work.imports = [
-      ../../homes/argentum/work/home.nix
+      ../../homes/work/home.nix
       inputs.catppuccin.homeManagerModules.catppuccin
     ];
     # backupFileExtension = "hm-backup";
@@ -92,15 +92,8 @@
     extraGroups = [ "networkmanager" "wheel" "audio" ];
   };
 
-  services.displayManager.sddm = {
-    enable = true;
-    catppuccin = {
-      enable = true;
-      font = "Fira Code";
-    };
-    # Fix wrong Qt version
-    package = pkgs.kdePackages.sddm;
-  };
+  isArgentum = true;
+  packageConfiguration.enableArgentum = true;
 
   # libinput
   services.libinput = {
@@ -137,5 +130,4 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "22.11"; # Did you read the comment?
-
 }
