@@ -1,7 +1,9 @@
 # All my Hyprland settings
-{
+{ config, lib, ...}: {
   # Monitors
-  "monitor" = [
+  "monitor" = if config.isArgentum then [
+    "eDP-1, 2880x1920@120, 0x0, 2"
+  ] else [
     "DP-1, 2560x1440@144, 0x0, 1"
     "DP-2, 1920x1080@143.85, -1920x360, 1"
   ];
@@ -19,11 +21,22 @@
     "hyprpaper" # TODO: Unload preloaded after? idk
     "solaar -w hide"
     "waybar"
-  ];
+  ] ++ (if config.isArgentum then [
+    "blueman-applet"
+  ] else []) ++ (if config.hyprlandSettings.workAutostart then [
+    "[workspace 1 silent] brave"
+    "[workspace 2 silent] alacritty"
+    "[workspace 3 silent] codium"
+    "[workspace 4 silent] obsidian"
+    "[workspace 5 silent] slack"
+    "[workspace 10 silent] vesktop"
+  ] else []);
 
   # Look & Feel
   general = {
     resize_on_border = true;
+    gaps_in = lib.optionalAttrs config.isArgentum 4;
+    gaps_out = lib.optionalAttrs config.isArgentum 8;
   };
   decoration = {
     rounding = 6;
@@ -37,7 +50,7 @@
   };
 
   # Input
-  input = {
+  input = lib.optionalAttrs (!config.isArgentum) {
     accel_profile = "flat";
   };
 
@@ -100,7 +113,10 @@
     ", XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
     ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
     ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
-  ];
+  ] ++ (if config.isArgentum then [
+    ", XF86MonBrightnessUp, exec, brightnessctl s +5%"
+    ", XF86MonBrightnessDown, exec, brightnessctl s 5%-"
+  ] else []);
   bindl = [
     # Playerctl
     ", XF86AudioPlay, exec, playerctl play-pause"
@@ -128,14 +144,16 @@
   ];
 
   # Workspace
-  workspace = [
+  workspace = (if config.isArgentum then [
+    "1, monitor:eDP-1, default:true"
+  ] else [
     "1, monitor:DP-1, default:true"
     "2, monitor:DP-1"
     "3, monitor:DP-1"
     "4, monitor:DP-1"
     "5, monitor:DP-1"
     "10, monitor:DP-2, default:true"
-  ];
+  ]);
 
   misc = {
     disable_hyprland_logo = true;

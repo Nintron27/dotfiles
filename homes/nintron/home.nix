@@ -1,29 +1,11 @@
-{ inputs, config, pkgs, ... }:
+{ pkgs, pkgs-unstable, lib, config, isArgentum, ... }:
 
 {
   imports = [
-    ../common
+    (import ../common { inherit pkgs pkgs-unstable lib config; username = "nintron"; } )
   ];
 
-  home.username = "nintron";
-  home.homeDirectory = "/home/nintron";
+  packageConfiguration.enablePersonal = true;
 
-  home.stateVersion = "23.11";
-
-  ###########################
-  # Packages and/or Configs #
-  ###########################
-
-  # fish
-  programs.fish = {
-    enable = true;
-    interactiveShellInit = ''
-      set fish_greeting # Disable greeting
-      export EDITOR=hx
-      # Set PATH to add .local/bin
-      export PATH="$PATH:/home/nintron/.local/bin"
-    '';
-
-    catppuccin.enable = true;
-  };
+  isArgentum = isArgentum;
 }
