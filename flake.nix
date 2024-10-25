@@ -12,9 +12,13 @@
       url = "github:nix-community/home-manager/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    kmonad = {
+      url = "git+https://github.com/kmonad/kmonad?submodules=1&dir=nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = inputs@{ self, nixpkgs, nixpkgs-unstable, nixos-hardware, catppuccin, home-manager, ... }:
+  outputs = inputs@{ self, nixpkgs, nixpkgs-unstable, nixos-hardware, catppuccin, home-manager, kmonad, ... }:
   {
     nixosConfigurations = {
       igneous = nixpkgs.lib.nixosSystem rec {
@@ -46,6 +50,7 @@
         modules = [
           ./hosts/argentum
           nixos-hardware.nixosModules.framework-13-7040-amd
+          kmonad.nixosModules.default
         ];
       };
     };

@@ -54,6 +54,16 @@
   '';
   services.logind.lidSwitch = "suspend-then-hibernate";
 
+  services.kmonad = {
+   enable = true;
+     keyboards = {
+       myKMonadOutput = {
+         device = "/dev/input/by-path/platform-i8042-serio-0-event-kbd";
+         config = builtins.readFile ./keyboard.kbd;
+       };
+     };
+  };
+
   # Configure keymap in X11
   services.xserver = {
     xkb.layout = "us";

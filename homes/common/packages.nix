@@ -66,6 +66,8 @@
       obsidian
 
       # Development
+      natscli
+      nsc
       pkgs-unstable.valkey
       gnumake
       git
