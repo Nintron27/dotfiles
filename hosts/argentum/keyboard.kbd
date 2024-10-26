@@ -37,17 +37,18 @@
 )
 
 (defalias
-  rt (tap-next-release r (layer-toggle symbols))
-  st (tap-next-release s lalt)
-  tt (tap-next-release t lmet)
+  rt (tap-next r (layer-toggle symbols))
+  st (tap-next s lalt)
+  tt (tap-next t lmet)
 
-  nt (tap-next-release n lmet)
-  et (tap-next-release e lalt)
-  it (tap-next-release i (layer-toggle symbols))
+  nt (tap-next n lmet)
+  et (tap-next e lalt)
+  it (tap-next i (layer-toggle symbols))
 
-  spct (tap-next-release spc lsft)
-  esct (tap-next-release esc lctl)
-  tabt (tap-next-release tab rctl)
+  spct (tap-next spc lsft)
+  esct (tap-next esc lctl)
+  tabt (tap-next tab rctl)
+  rett (tap-next ret rsft)
 )
 
 (deflayer base
@@ -56,7 +57,7 @@
   del  q    w    f    p    b    j    l    u    y    ;    \    ]    \
   bspc a    @rt  @st  @tt  g    m    @nt  @et  @it    o    '    ret
   =    z    x    c    d    v    k    h    ,    .    /         -
-  lctl fn   lmet @esct       @spct        @tabt rctl lft up rght
+  lctl fn   lmet @esct       @spct        @tabt @rett lft up rght
                                                         down
 )
 
