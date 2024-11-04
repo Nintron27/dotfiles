@@ -34,6 +34,7 @@
       grim
       slurp
       wl-clipboard
+      wireguard-tools
 
       # fonts
       fira-code
