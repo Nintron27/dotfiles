@@ -1,8 +1,8 @@
-{ pkgs, pkgs-unstable, lib, config, isArgentum, ... }:
+{ pkgs, lib, config, isArgentum, ... }:
 
 {
   imports = [
-    (import ../common { inherit pkgs pkgs-unstable lib config; username = "nintron"; } )
+    (import ../common { inherit pkgs lib config; username = "nintron"; } )
   ];
 
   packageConfiguration.enablePersonal = true;

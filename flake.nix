@@ -2,14 +2,13 @@
   description = "My NixOS config flake";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs?rev=dc460ec76cbff0e66e269457d7b728432263166c";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     catppuccin.url = "github:catppuccin/nix";
     # hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1&ref=refs/tags/v0.41.2";
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.05";
+      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     kmonad = {
@@ -18,33 +17,25 @@
     };
   };
 
-  outputs = inputs@{ self, nixpkgs, nixpkgs-unstable, nixos-hardware, catppuccin, home-manager, kmonad, ... }:
+  outputs = inputs@{ self, nixpkgs, nixos-hardware, catppuccin, home-manager, kmonad, ... }:
   {
     nixosConfigurations = {
-      igneous = nixpkgs.lib.nixosSystem rec {
+      igneous = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
 
         specialArgs = { 
           inherit inputs;
-          pkgs-unstable = import nixpkgs-unstable {
-            inherit system;
-            config.allowUnfree = true;
-          };
         };
 
         modules = [
           ./hosts/igneous
         ];
       };
-      argentum = nixpkgs.lib.nixosSystem rec {
+      argentum = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
 
         specialArgs = { 
           inherit inputs;
-          pkgs-unstable = import nixpkgs-unstable {
-            inherit system;
-            config.allowUnfree = true;
-          };
         };
 
         modules = [
