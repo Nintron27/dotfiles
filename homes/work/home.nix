@@ -1,7 +1,7 @@
-{ pkgs, pkgs-unstable, lib, config, isArgentum, ... }:
+{ pkgs, lib, config, isArgentum, ... }:
 {
   imports = [
-    (import ../common { inherit pkgs pkgs-unstable lib config; username = "work"; } )
+    (import ../common { inherit pkgs lib config; username = "work"; } )
   ];
   # Autostart work apps on correct monitors
   hyprlandSettings.workAutostart = true;

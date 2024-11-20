@@ -35,7 +35,8 @@
         wallpaper = ", $HOME/.config/wallpaper.png";
       };
     };
-    services.hypridle = {
+    # TODO: Fix hypridle on desktop, currently borked
+    services.hypridle = lib.optionalAttrs config.isArgentum {
       enable = true;
       settings = {
         general = {

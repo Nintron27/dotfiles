@@ -1,4 +1,4 @@
-{ lib, config, pkgs, pkgs-unstable, ... }:
+{ lib, config, pkgs, ... }:
 {
   options.packageConfiguration = {
     enablePersonal = lib.mkOption {
@@ -55,9 +55,9 @@
       wcalc
       gedit
       # gnome.gnome-screenshot
-      gnome.nautilus
-      gnome.file-roller
-      gnome.cheese
+      nautilus
+      file-roller
+      cheese
       gimp
       firefox
       brave
@@ -69,13 +69,14 @@
       # Development
       natscli
       nsc
-      pkgs-unstable.valkey
+      valkey
       gnumake
       git
       hey
       nodejs
       beekeeper-studio
-      go
+      go_1_23
+      go-task
       go-migrate
       gcc
       postman
@@ -109,7 +110,7 @@
       brightnessctl # Laptop only
     ] else []) ++ (if config.packageConfiguration.enableWork then [
       # development
-      pkgs-unstable.shopify-cli
+      shopify-cli
       handbrake
       ngrok
 
