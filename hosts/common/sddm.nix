@@ -1,7 +1,9 @@
 { pkgs, ... }:
 {
+  # Disable for now, as SDDM bug prevents environment variables
+  # from being passed, so nothing works anyway, just use TTY to launch.
   services.displayManager.sddm = {
-    enable = true;
+    enable = false;
     catppuccin = {
       enable = true;
       font = "Fira Code";

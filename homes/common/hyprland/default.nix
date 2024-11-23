@@ -19,7 +19,8 @@
       catppuccin.enable = true;
     };
 
-    home.pointerCursor.size = if config.isArgentum then 24 else 32;
+    # Conditional left, as Hyprland cursor seems to be too big now on v45
+    home.pointerCursor.size = if config.isArgentum then 24 else 24;
 
     programs.hyprlock.enable = true;
     home.file.".config/hypr/hyprlock.conf".source = ./hyprlock/hyprlock.conf;

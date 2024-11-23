@@ -111,6 +111,7 @@
   services.xserver = {
     enable = true;
 
+    displayManager.lightdm.enable = false;
     desktopManager.xterm.enable = false;
   };
 
