@@ -101,6 +101,7 @@
     enable = true;
     videoDrivers = [ "amdgpu" ];
 
+    displayManager.lightdm.enable = false;
     desktopManager.xterm.enable = false;
   };
   hardware.opengl.enable = true;
