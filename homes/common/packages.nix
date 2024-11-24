@@ -97,6 +97,7 @@
       taplo # toml
       nodePackages.yaml-language-server # yaml
       lldb
+      tailwindcss-language-server
     ] ++ (if config.packageConfiguration.enablePersonal then [
       # sdrpp
       # rtl-sdr-osmocom
