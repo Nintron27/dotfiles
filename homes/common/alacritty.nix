@@ -1,9 +1,8 @@
 { config, ... }: {
   config = {
+    catppuccin.alacritty.enable = true;
     programs.alacritty = {
       enable = true;
-
-      catppuccin.enable = true;
 
       settings = {
         window.padding = {

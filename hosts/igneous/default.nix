@@ -15,15 +15,12 @@
     ];
 
   # Bootloader.
+  catppuccin.grub.enable = true;
   boot.loader.grub = {
     enable = true;
     device = "nodev";
     useOSProber = true;
     efiSupport = true;
-
-    catppuccin = {
-      enable = true;
-    };
   };
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
@@ -104,7 +101,7 @@
     displayManager.lightdm.enable = false;
     desktopManager.xterm.enable = false;
   };
-  hardware.opengl.enable = true;
+  hardware.graphics.enable = true;
 
   # GVFS for Samba
   services.gvfs.enable = true;

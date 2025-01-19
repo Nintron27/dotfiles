@@ -9,6 +9,7 @@
     ./nix.nix
     ./hyprland.nix
     ./sddm.nix
+    ./fonts.nix
     ./fish.nix
     ./catppuccin.nix
     ./networking.nix

@@ -36,10 +36,11 @@
       wl-clipboard
       wireguard-tools
 
-      # fonts
-      fira-code
-      fira-code-symbols
-      (nerdfonts.override { fonts = [ "FiraCode" ]; })
+      # This is where I would put my fonts, IF 25.05 DIDNT MOVE IT ON ME
+      # fira-code
+      # fira-code-symbols
+      # nerd-fonts.fira-code
+      # (nerdfonts.override { fonts = [ "FiraCode" ]; })
 
       # Random
       filezilla

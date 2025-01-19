@@ -2,7 +2,7 @@
   description = "My NixOS config flake";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs?rev=dc460ec76cbff0e66e269457d7b728432263166c";
+    nixpkgs.url = "github:nixos/nixpkgs";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     catppuccin.url = "github:catppuccin/nix";
     # hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1&ref=refs/tags/v0.41.2";
