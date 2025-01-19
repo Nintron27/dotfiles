@@ -40,8 +40,8 @@
       flavor = "mocha";
       accent = "mauve";
 
-      pointerCursor.enable = true;
-      pointerCursor.accent = "light";
+      cursors.enable = true;
+      cursors.accent = "light";
     };
 
     # gammastep
@@ -60,9 +60,9 @@
 
 
     # GTK 2/3
+    catppuccin.gtk.enable = true;
     gtk = {
       enable = true;
-      catppuccin.enable = true;
     };
 
     # QT, sadly breaks XDPH currently
@@ -74,9 +74,9 @@
     # };
 
     # TODO: check this later for clean up of other stuff >>> programs.rofi =  import ./config/rofi/config.nix;
+    catppuccin.rofi.enable = true;
     programs.rofi = {
       enable = true;
-      catppuccin.enable = true;
       package = pkgs.rofi-wayland;
   
       extraConfig = {
@@ -90,6 +90,7 @@
     };
 
     # fish
+    catppuccin.fish.enable = true;
     programs.fish = {
       enable = true;
       interactiveShellInit = ''
@@ -98,8 +99,6 @@
         # Set PATH to add .local/bin
         export PATH="$PATH:/home/${username}/.local/bin"
       '';
-
-      catppuccin.enable = true;
     };
 
     # direnv
@@ -107,18 +106,19 @@
     programs.direnv.nix-direnv.enable = true;
 
     # starship
+    catppuccin.starship.enable = true;
     programs.starship = {
       enable = true;
       enableFishIntegration = true;
       settings = {
         add_newline = false;
       };
-      catppuccin.enable = true;
     };
 
+
+    catppuccin.lazygit.enable = true;
     programs.lazygit = {
       enable = true;
-      catppuccin.enable = true;
     };
 
     # custom scripts

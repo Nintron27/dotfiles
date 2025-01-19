@@ -1,7 +1,7 @@
 {
+  catppuccin.dunst.enable = true;
   services.dunst = {
     enable = true;
-    catppuccin.enable = true;
     # configFile = ./config/dunst/dunstrc;
     settings = {
       global = {

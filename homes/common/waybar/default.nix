@@ -1,9 +1,9 @@
 { config, ... }:
 {
   config = {
+    catppuccin.waybar.enable = true;
     programs.waybar = {
       enable = true;
-      catppuccin.enable = true;
 
       settings = (if config.isArgentum then {
         primary = {
