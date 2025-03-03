@@ -23,7 +23,7 @@
     efiSupport = true;
   };
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.efi.efiSysMountPoint = "/boot/efi";
+  # boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
   networking.hostName = "igneous"; # Define your hostname
 
