@@ -99,6 +99,8 @@
       nodePackages.yaml-language-server # yaml
       lldb
       tailwindcss-language-server
+      superhtml
+      emmet-ls
     ] ++ (if config.packageConfiguration.enablePersonal then [
       # sdrpp
       # rtl-sdr-osmocom

@@ -33,6 +33,29 @@ name = "json"
 indent = { tab-width = 4, unit = "\t" }
 
 [[language]]
+name = "html"
+scope = "text.html.basic"
+injection-regex = "html"
+file-types = [
+	"html",
+	"htm",
+	"shtml",
+	"xhtml",
+	"xht",
+	"jsp",
+	"asp",
+	"aspx",
+	"jshtm",
+	"volt",
+	"rhtml",
+	"cshtml",
+]
+block-comment-tokens = { start = "<!--", end = "-->" }
+language-servers = ["superhtml", "emmet-lsp"]
+auto-format = true
+indent = { tab-width = 4, unit = "\t" }
+
+[[language]]
 name = "go"
 language-servers = ["gopls", "tailwindcss-ls"]
 
@@ -45,3 +68,7 @@ config = { userLanguages = { go = "html", "*.go" = "html" }, tailwindCSS = { exp
 		"[\"`]([^\"`]*)[\"`]",
 	],
 ] } } }
+
+[language-server.emmet-lsp]
+command = "emmet-ls"
+args = ["--stdio"]
