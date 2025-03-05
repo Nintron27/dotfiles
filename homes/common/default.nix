@@ -50,10 +50,10 @@
       tray = true;
 
       dawnTime = "07:30";
-      duskTime = "20:45";
+      duskTime = "20:00";
 
       temperature = {
-        day = 5500;
+        day = 6000;
         night = 3700;
       };
     };
