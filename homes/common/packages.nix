@@ -57,6 +57,7 @@
       gedit
       # gnome.gnome-screenshot
       nautilus
+      localsend
       file-roller
       cheese
       gimp

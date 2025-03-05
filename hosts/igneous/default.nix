@@ -26,7 +26,9 @@
   # boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
   networking.hostName = "igneous"; # Define your hostname
-
+  # Allow LocalSend
+  networking.firewall.allowedUDPPorts = [ 53317 ];
+  networking.firewall.allowedTCPPorts = [ 53317 ];
 
   # Set your time zone.
   time.timeZone = "America/New_York";
