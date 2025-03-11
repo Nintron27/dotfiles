@@ -28,6 +28,9 @@
   # boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
   networking.hostName = "argentum"; # Define your hostname
+  # Allow LocalSend
+  networking.firewall.allowedUDPPorts = [ 53317 ];
+  networking.firewall.allowedTCPPorts = [ 53317 ];
 
   # security.polkit.enable = true;
 
