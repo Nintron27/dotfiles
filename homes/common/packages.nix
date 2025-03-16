@@ -67,6 +67,8 @@
       vesktop
       jdk17_headless
       obsidian
+      darktable
+      audacity
 
       # Development
       natscli
@@ -96,7 +98,8 @@
       nodePackages.typescript-language-server
       nodePackages.vscode-langservers-extracted
       nodePackages.svelte-language-server
-      nodePackages.graphql-language-service-cli
+      # Temp removed, waiting on merge https://github.com/NixOS/nixpkgs/pull/384397
+      # nodePackages.graphql-language-service-cli
       taplo # toml
       nodePackages.yaml-language-server # yaml
       lldb
