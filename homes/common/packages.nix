@@ -78,7 +78,8 @@
       nodejs
       beekeeper-studio
       go_1_23
-      go-task
+      deno
+      # go-task
       go-migrate
       gcc
       postman
