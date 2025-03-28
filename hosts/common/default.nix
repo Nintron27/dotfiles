@@ -7,6 +7,7 @@
     inputs.catppuccin.nixosModules.catppuccin
 
     ./nix.nix
+    ./virtualisation.nix
     ./hyprland.nix
     ./sddm.nix
     ./fonts.nix
