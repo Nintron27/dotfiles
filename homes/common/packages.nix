@@ -69,6 +69,7 @@
       obsidian
       darktable
       audacity
+      spotify
 
       # Development
       natscli
