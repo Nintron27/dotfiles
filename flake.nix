@@ -9,8 +9,8 @@
 
     # Pull Helix from master to have fix for lsp bug
     helix = {
-      url = "github:helix-editor/helix";
-      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:helix-editor/helix?rev=e53462c78ccf90180442f00468ea305a57c24fea";
+      # inputs.nixpkgs.follows = "nixpkgs";
     };
 
     home-manager = {
@@ -18,7 +18,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     kmonad = {
-      url = "git+https://github.com/kmonad/kmonad?submodules=1&dir=nix";
+      url = "github:kmonad/kmonad?dir=nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
