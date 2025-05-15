@@ -7,6 +7,12 @@
     catppuccin.url = "github:catppuccin/nix";
     # hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1&ref=refs/tags/v0.41.2";
 
+    # Pull Helix from master to have fix for lsp bug
+    helix = {
+      url = "github:helix-editor/helix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -17,7 +23,7 @@
     };
   };
 
-  outputs = inputs@{ self, nixpkgs, nixos-hardware, catppuccin, home-manager, kmonad, ... }:
+  outputs = inputs@{ self, nixpkgs, nixos-hardware, catppuccin, home-manager, kmonad, helix, ... }:
   {
     nixosConfigurations = {
       igneous = nixpkgs.lib.nixosSystem {
