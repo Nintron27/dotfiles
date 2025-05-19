@@ -202,3 +202,5 @@ serialize_pane_viewport true
 // also default to the scrollback size. This does nothing if `serialize_pane_viewport` is not true.
 //
 // scrollback_lines_to_serialize 10000
+
+stacked_resize false
