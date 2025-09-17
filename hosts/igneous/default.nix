@@ -49,7 +49,7 @@
   };
 
   # rtl-sdr
-  services.udev.packages = [ pkgs.rtl-sdr ];
+  services.udev.packages = [ pkgs.rtl-sdr pkgs.finalmouse-udev-rules ];
 
   # Configure keymap in X11
   services.xserver = {
@@ -89,11 +89,12 @@
     extraGroups = [ "networkmanager" "wheel" "audio" ];
   };
 
-  # libinput
-  services.libinput = {
-    enable = true;
-    mouse.accelProfile = "flat";
-  };
+  # TODO: Disable mouse debouncing
+  environment.etc."libinput/local-overrides.quirks".text = ''
+  [Your Mouse Name]
+  MatchName=Finalmouse UltralightX dongle Mouse
+  ModelBouncingKeys=1
+  '';
 
   # xserver
   services.xserver = {
