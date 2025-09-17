@@ -27,7 +27,7 @@
     nixpkgs.config.allowBroken= true;
     # Allow EOL
     nixpkgs.config.permittedInsecurePackages = [
-      "beekeeper-studio-5.2.12"
+      "beekeeper-studio-5.3.4"
     ];
 
     # Let Home Manager install and manage itself.
@@ -46,6 +46,8 @@
 
       cursors.enable = true;
       cursors.accent = "light";
+
+      brave.enable = true;
     };
 
     # gammastep
@@ -64,7 +66,6 @@
 
 
     # GTK 2/3
-    catppuccin.gtk.enable = true;
     gtk = {
       enable = true;
     };
@@ -81,7 +82,7 @@
     catppuccin.rofi.enable = true;
     programs.rofi = {
       enable = true;
-      package = pkgs.rofi-wayland;
+      # package = pkgs.rofi-wayland;
   
       extraConfig = {
         modi = "drun";
@@ -118,7 +119,6 @@
         add_newline = false;
       };
     };
-
 
     catppuccin.lazygit.enable = true;
     programs.lazygit = {

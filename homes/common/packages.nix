@@ -80,7 +80,7 @@
       hey
       nodejs
       beekeeper-studio
-      go_1_23
+      go
       deno
       # go-task
       go-migrate
@@ -117,7 +117,6 @@
       # r2modman
       signal-desktop
       feather
-      minecraft
       prismlauncher
       obs-studio
     ] else []) ++ (if config.packageConfiguration.enableArgentum then [

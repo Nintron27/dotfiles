@@ -171,8 +171,15 @@
             font-size: 16px;
         }
 
+        #waybar {
+          background-color: @crust;
+          color: @text;
+          border-radius: 6px;
+        }
+
         #workspaces button {
           border-radius: 0px;
+          color: @text;
         }
         #workspaces button.active {
           background-color: @surface1;

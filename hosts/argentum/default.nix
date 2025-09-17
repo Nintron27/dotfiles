@@ -84,11 +84,11 @@
     };
     users.nintron.imports = [
       ../../homes/nintron/home.nix
-      inputs.catppuccin.homeManagerModules.catppuccin
+      inputs.catppuccin.homeModules.catppuccin
     ];
     users.work.imports = [
       ../../homes/work/home.nix
-      inputs.catppuccin.homeManagerModules.catppuccin
+      inputs.catppuccin.homeModules.catppuccin
     ];
     # backupFileExtension = "hm-backup";
   };
