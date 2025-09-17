@@ -27,7 +27,7 @@
     nixpkgs.config.allowBroken= true;
     # Allow EOL
     nixpkgs.config.permittedInsecurePackages = [
-      "beekeeper-studio-5.1.5"
+      "beekeeper-studio-5.2.12"
     ];
 
     # Let Home Manager install and manage itself.
