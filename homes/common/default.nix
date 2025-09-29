@@ -60,7 +60,7 @@
 
       temperature = {
         day = 6000;
-        night = 3700;
+        night = 3300;
       };
     };
 
