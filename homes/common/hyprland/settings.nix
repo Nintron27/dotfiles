@@ -29,7 +29,6 @@
     "[workspace 3 silent] codium"
     "[workspace 4 silent] obsidian"
     "[workspace 5 silent] slack"
-    "[workspace 10 silent] vesktop"
   ] else []);
 
   # Look & Feel
