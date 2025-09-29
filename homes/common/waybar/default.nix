@@ -174,7 +174,6 @@
         #waybar {
           background-color: @crust;
           color: @text;
-          border-radius: 6px;
         }
 
         #workspaces button {
