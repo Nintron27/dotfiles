@@ -10,6 +10,7 @@
     ./virtualisation.nix
     ./hyprland.nix
     ./sddm.nix
+    ./ssh.nix
     ./fonts.nix
     ./fish.nix
     ./catppuccin.nix
