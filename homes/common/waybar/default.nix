@@ -238,12 +238,15 @@
         }
 
         #waybar {
+          background-color: @crust;
+          color: @text;
           border-radius: 6px;
         }
 
         #workspaces button {
           padding: 2px 4px;
           border-radius: 6px;
+          color: @text;
         }
         #workspaces button.active {
           background-color: @surface1;
