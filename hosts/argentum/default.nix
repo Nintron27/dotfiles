@@ -134,6 +134,9 @@
   # dconf for Gnome packages
   programs.dconf.enable = true;
 
+  # ledger support
+  hardware.ledger.enable = true;
+
   # Steam
   programs.steam = {
     enable = true;

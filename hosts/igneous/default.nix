@@ -112,6 +112,9 @@
   # dconf for Gnome packages
   programs.dconf.enable = true;
 
+  # ledger support
+  hardware.ledger.enable = true;
+
   # Enable FISH systemwide
   programs.fish.enable = true;
   users.defaultUserShell = pkgs.fish;

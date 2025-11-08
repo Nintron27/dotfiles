@@ -27,6 +27,7 @@
   config = {
     home.packages = with pkgs; [
       # desktop stuff
+      v4l-utils
       qpwgraph
       i3lock
       playerctl
@@ -44,7 +45,9 @@
 
       # Random
       filezilla
+      jrnl
       htop
+      protonvpn-gui
       # mullvad-vpn
       # monero-gui
       wget
@@ -61,8 +64,9 @@
       file-roller
       cheese
       gimp
-      firefox
+      # firefox
       brave
+      chromium
       yubikey-manager
       vesktop
       jdk17_headless
@@ -72,6 +76,7 @@
       spotify
 
       # Development
+      steam-run
       natscli
       nsc
       valkey
@@ -115,6 +120,7 @@
       # sdrpp
       # rtl-sdr-osmocom
       # r2modman
+      ledger-live-desktop
       signal-desktop
       feather
       prismlauncher
@@ -123,13 +129,12 @@
       brightnessctl # Laptop only
     ] else []) ++ (if config.packageConfiguration.enableWork then [
       # development
-      shopify-cli
+      # shopify-cli
       handbrake
       ngrok
 
       # un-categorized packages
       openssl
-      chromium
       slack
       zoom-us
     ] else []);
