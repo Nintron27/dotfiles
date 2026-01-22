@@ -32,7 +32,16 @@
       settings = {
         splash = false;
         preload = "$HOME/.config/wallpaper.png";
-        wallpaper = ", $HOME/.config/wallpaper.png";
+        wallpaper = [
+          {
+            monitor = "DP-1";
+            path = "$HOME/.config/wallpaper.png";
+          }
+          {
+            monitor = "DP-2";
+            path = "$HOME/.config/wallpaper.png";
+          }
+        ];
       };
     };
     # TODO: Fix hypridle on desktop, currently borked

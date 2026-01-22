@@ -84,7 +84,7 @@
       git
       hey
       nodejs
-      beekeeper-studio
+      # beekeeper-studio
       go
       deno
       # go-task

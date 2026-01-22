@@ -6,17 +6,17 @@ roots = ["svelte.config.js"]
 # formatter: the svelteserver LSP automatically uses prettier (I think)
 language-servers = ["svelteserver", "tailwindcss-ls"]
 
-[[language]]
-name = "typescript"
-roots = ["deno.json", "deno.jsonc", "package.json"]
-auto-format = true
-language-servers = ["deno-lsp"]
+# [[language]]
+# name = "typescript"
+# roots = ["deno.json", "deno.jsonc", "package.json"]
+# auto-format = true
+# language-servers = ["deno-lsp"]
 
-[[language]]
-name = "javascript"
-roots = ["deno.json", "deno.jsonc", "package.json"]
-auto-format = true
-language-servers = ["deno-lsp"]
+# [[language]]
+# name = "javascript"
+# roots = ["deno.json", "deno.jsonc", "package.json"]
+# auto-format = true
+# language-servers = ["deno-lsp"]
 
 [[language]]
 name = "graphql"
