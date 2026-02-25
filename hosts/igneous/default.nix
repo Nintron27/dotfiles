@@ -122,6 +122,7 @@
   # Steam
   programs.steam = {
     enable = true;
+    gamescopeSession.enable = true;
   };
 
   # This value determines the NixOS release from which the default

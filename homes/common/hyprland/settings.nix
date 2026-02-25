@@ -132,14 +132,14 @@
   ];
 
   # Window Rules
-  windowrulev2 = [
-    "float, class:(org.gnome.Nautilus)"
+  windowrule = [
+    "float on, match:class org.gnome.Nautilus"
 
     # Picture in picture
-    "float, title:(Picture in picture)"
-    "pin, title:(Picture in picture)"
-    "size 800 450, title:(Picture in picture)"
-    "keepaspectratio, title:(Picture in picture)"
+    "float on, match:title Picture in picture"
+    "pin on, match:title Picture in picture"
+    "size 800 450, match:title Picture in picture"
+    "keep_aspect_ratio on, match:title Picture in picture"
   ];
 
   # Workspace
