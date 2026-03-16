@@ -5,6 +5,10 @@
     nixpkgs.url = "github:nixos/nixpkgs";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     catppuccin.url = "github:catppuccin/nix";
+    spacetimedb = {
+      url = "github:clockworklabs/SpacetimeDB";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     # hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1&ref=refs/tags/v0.41.2";
 
     home-manager = {
