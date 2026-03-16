@@ -1,4 +1,4 @@
-{ lib, config, pkgs, inputs, ... }:
+{ lib, config, pkgs, ... }:
 {
   options.packageConfiguration = {
     enablePersonal = lib.mkOption {
@@ -96,8 +96,6 @@
       bruno
       sqlc
       vscodium
-
-      inputs.spacetimedb.packages."x86_64-linux".default
 
       dive # look into docker image layers
       podman-tui # status of containers in the terminal
