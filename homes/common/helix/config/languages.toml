@@ -52,7 +52,7 @@ file-types = [
 	"cshtml",
 ]
 block-comment-tokens = { start = "<!--", end = "-->" }
-language-servers = ["superhtml", "tailwindcss-ls", "emmet-lsp"]
+language-servers = ["tailwindcss-ls", "superhtml", "emmet-lsp"]
 auto-format = true
 
 [language-server.tailwindcss-ls]

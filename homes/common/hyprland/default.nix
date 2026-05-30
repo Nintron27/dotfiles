@@ -11,16 +11,18 @@
   };
 
   config = {
-    catppuccin.hyprland.enable = true;
+    catppuccin.hyprland.enable = false;
     wayland.windowManager.hyprland = {
       enable = true;
+      configType = "hyprlang";
 
       settings = import ./settings.nix { inherit config lib; };
     };
 
     # Conditional left, as Hyprland cursor seems to be too big now on v45
-    home.pointerCursor.size = if config.isArgentum then 24 else 24;
+    # home.pointerCursor.size = if config.isArgentum then 24 else 24;
 
+    catppuccin.hyprlock.enable = false;
     programs.hyprlock.enable = true;
     home.file.".config/hypr/hyprlock.conf".source = ./hyprlock/hyprlock.conf;
     home.file.".config/hypr/mocha.conf".source = ./hyprlock/mocha.conf;

@@ -1,9 +1,11 @@
-{
-  programs.helix = {
-    enable = true;
-    # catppuccin.enable = true; # Done below instead
-  };
-  home.file.".config/helix" = {
-    source = ./config;
+{ ... }: {
+  config = {
+    catppuccin.helix.enable = false; # Done below instead
+    programs.helix = {
+      enable = true;
+    };
+    home.file.".config/helix" = {
+      source = ./config;
+    };
   };
 }

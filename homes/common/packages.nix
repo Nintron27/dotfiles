@@ -55,7 +55,6 @@
       ffmpeg-full
       baobab
       pavucontrol
-      neofetch
       wcalc
       gedit
       # gnome.gnome-screenshot
@@ -76,19 +75,22 @@
       spotify
 
       # Development
-      steam-run
-      natscli
-      nsc
+      pi-coding-agent
       valkey
-      gnumake
       git
+      gnumake
       hey
+      nsc
+      natscli
+      steam-run
       nodejs
-      # beekeeper-studio
-      go
-      deno
+
       # go-task
       go-migrate
+      go
+
+      # beekeeper-studio
+      deno
       gcc
       postman
       turso-cli
@@ -97,21 +99,21 @@
       sqlc
       vscodium
 
-      dive # look into docker image layers
       podman-tui # status of containers in the terminal
       docker-compose # start group of containers for dev
+      dive # look into docker image layers
 
       # langservers / Formatters
-      nodePackages.prettier
+      prettier
       nil
       gopls # go
-      nodePackages.typescript-language-server
-      nodePackages.vscode-langservers-extracted
-      nodePackages.svelte-language-server
+      typescript-language-server
+      vscode-langservers-extracted
+      svelte-language-server
       # Temp removed, waiting on merge https://github.com/NixOS/nixpkgs/pull/384397
       # nodePackages.graphql-language-service-cli
       taplo # toml
-      nodePackages.yaml-language-server # yaml
+      yaml-language-server # yaml
       lldb
       tailwindcss-language-server
       superhtml

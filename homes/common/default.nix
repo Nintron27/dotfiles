@@ -41,6 +41,8 @@
 
     # catppuccin
     catppuccin = {
+      autoEnable = true;
+      enable = true;
       flavor = "mocha";
       accent = "mauve";
 
@@ -124,6 +126,15 @@
     programs.lazygit = {
       enable = true;
       settings = { };
+    };
+
+    # opencode
+    catppuccin.opencode.enable = true;
+    programs.opencode = {
+      enable = true;
+      # settings = {
+      #   shell = "bash";
+      # };
     };
 
     # custom scripts
