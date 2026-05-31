@@ -14,15 +14,12 @@
     ];
 
   # Bootloader.
+  catppuccin.grub.enable = true;
   boot.loader.grub = {
     enable = true;
     device = "nodev";
     useOSProber = true;
     efiSupport = true;
-
-    catppuccin = {
-      enable = true;
-    };
   };
   boot.loader.efi.canTouchEfiVariables = true;
   # boot.loader.efi.efiSysMountPoint = "/boot/efi";

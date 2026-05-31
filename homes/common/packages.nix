@@ -1,4 +1,4 @@
-{ lib, config, pkgs, ... }:
+{ lib, config, pkgs, inputs, ... }:
 {
   options.packageConfiguration = {
     enablePersonal = lib.mkOption {
@@ -47,7 +47,7 @@
       filezilla
       jrnl
       htop
-      protonvpn-gui
+      proton-vpn
       # mullvad-vpn
       # monero-gui
       wget
@@ -75,7 +75,8 @@
       spotify
 
       # Development
-      pi-coding-agent
+      (inputs.jailed-agents.lib.${pkgs.system}.makeJailedPi { name = "pi"; })
+      (inputs.jailed-agents.lib.${pkgs.system}.makeJailedOpencode { name = "opencode"; })
       valkey
       git
       gnumake
@@ -104,6 +105,8 @@
       dive # look into docker image layers
 
       # langservers / Formatters
+      nixd
+      nixfmt
       prettier
       nil
       gopls # go

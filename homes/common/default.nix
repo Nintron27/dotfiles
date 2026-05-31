@@ -1,4 +1,4 @@
-{ pkgs, lib, username, ... }:
+{ pkgs, lib, username, inputs, ... }:
 
 {
   imports = [
@@ -130,12 +130,12 @@
 
     # opencode
     catppuccin.opencode.enable = true;
-    programs.opencode = {
-      enable = true;
-      # settings = {
-      #   shell = "bash";
-      # };
-    };
+    # programs.opencode = {
+    #   enable = true;
+    #   # settings = {
+    #   #   shell = "bash";
+    #   # };
+    # };
 
     # custom scripts
     home.file.".local/bin" = {

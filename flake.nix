@@ -15,6 +15,18 @@
       url = "github:kmonad/kmonad?dir=nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    flake-utils.url = "github:numtide/flake-utils";
+    jail-nix.url = "sourcehut:~alexdavid/jail.nix";
+    llm-agents.url = "github:numtide/llm-agents.nix";
+
+    jailed-agents = {
+      url = "github:andersonjoseph/jailed-agents";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.jail-nix.follows = "jail-nix";
+      inputs.llm-agents.follows = "llm-agents";
+      inputs.flake-utils.follows = "flake-utils";
+    };
   };
 
   outputs = inputs@{ self, nixpkgs, nixos-hardware, catppuccin, home-manager, kmonad, ... }:
