@@ -14,7 +14,7 @@
   ];
 
   # Program keywords
-  "$terminal" = "alacritty";
+  "$terminal" = "ghostty +new-window";
 
   # Startup actions
   "exec-once" = [
@@ -25,7 +25,7 @@
     "blueman-applet"
   ] else []) ++ (if config.hyprlandSettings.workAutostart then [
     "[workspace 1 silent] brave"
-    "[workspace 2 silent] alacritty"
+    "[workspace 2 silent] $terminal"
     "[workspace 3 silent] codium"
     "[workspace 4 silent] obsidian"
     "[workspace 5 silent] slack"
@@ -58,7 +58,7 @@
 
   bind = [
     "$mainMod, r, exec, rofi -show drun"
-    "$mainMod, Return, exec, alacritty"
+    "$mainMod, Return, exec, $terminal"
     "$mainMod, q, killactive"
     "$mainMod, l, exec, hyprlock"
     "$mainMod SHIFT, x, exit"

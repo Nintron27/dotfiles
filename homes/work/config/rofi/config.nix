@@ -1,6 +1,5 @@
 {
   enable = true;
-  #terminal = "${pkgs.alacritty}/bin/alacritty";
   theme = ./catppuccin-mocha.rasi;
   
   extraConfig = {

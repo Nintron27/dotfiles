@@ -4,6 +4,7 @@
   imports = [
     ./packages.nix
     ./alacritty.nix
+    ./ghostty.nix
     ./hyprland
     ./dunst
     ./waybar
