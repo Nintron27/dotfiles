@@ -1,4 +1,4 @@
-{ lib, config, ...}:
+{ lib, config, ... }:
 {
   options.hyprlandSettings = {
     workAutostart = lib.mkOption {
@@ -34,16 +34,25 @@
       settings = {
         splash = false;
         preload = "$HOME/.config/wallpaper.png";
-        wallpaper = [
-          {
-            monitor = "DP-1";
-            path = "$HOME/.config/wallpaper.png";
-          }
-          {
-            monitor = "DP-2";
-            path = "$HOME/.config/wallpaper.png";
-          }
-        ];
+        wallpaper =
+          if config.isArgentum then
+            [
+              {
+                monitor = "eDP-1";
+                path = "$HOME/.config/wallpaper.png";
+              }
+            ]
+          else
+            [
+              {
+                monitor = "DP-1";
+                path = "$HOME/.config/wallpaper.png";
+              }
+              {
+                monitor = "DP-2";
+                path = "$HOME/.config/wallpaper.png";
+              }
+            ];
       };
     };
     # TODO: Fix hypridle on desktop, currently borked
@@ -57,16 +66,16 @@
         };
 
         listener = lib.optionalAttrs config.isArgentum [
-            {
-              timeout = 300; # 300
-              on-timeout = "brightnessctl -s set 0";
-              on-resume = "brightnessctl -r";
-            }
-            {
-              timeout = 330;
-              on-timeout = "systemctl suspend-then-hibernate";
-            }
-          ];
+          {
+            timeout = 300; # 300
+            on-timeout = "brightnessctl -s set 0";
+            on-resume = "brightnessctl -r";
+          }
+          {
+            timeout = 330;
+            on-timeout = "systemctl suspend-then-hibernate";
+          }
+        ];
       };
     };
   };

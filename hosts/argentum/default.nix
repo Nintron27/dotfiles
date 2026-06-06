@@ -49,9 +49,9 @@
     LC_TIME = "en_US.UTF-8";
   };
 
-  systemd.sleep.extraConfig = ''
-    HibernateDelaySec=3600s
-  '';
+  systemd.sleep.settings.Sleep = {
+    HibernateDelaySec = "3600s";
+  };
   services.logind.lidSwitch = "suspend-then-hibernate";
 
   services.kmonad = {
