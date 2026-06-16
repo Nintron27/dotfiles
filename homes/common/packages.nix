@@ -75,7 +75,40 @@
       spotify
 
       # Development
-      (inputs.jailed-agents.lib.${pkgs.system}.makeJailedPi { name = "pi"; })
+      (inputs.jailed-agents.lib.${pkgs.system}.makeJailedPi {
+        name = "pi";
+        env = {
+          TERM = "xterm-ghostty";
+        };
+        extraPkgs = [ gopls go nodejs ];
+        baseJailOptions =
+          inputs.jailed-agents.lib.${pkgs.system}.commonJailOptions
+          ++ (
+            let
+              combinators = inputs.jailed-agents.lib.${pkgs.system}.internals.jail.combinators;
+            in
+            [
+              # Mount herdr socket dir
+              (combinators.add-runtime ''
+                if [ -n "''${HERDR_SOCKET_PATH:-}" ]; then
+                  socket_dir=$(dirname "''${HERDR_SOCKET_PATH}")
+                  if [ -d "$socket_dir" ]; then
+                    RUNTIME_ARGS+=(--bind "$socket_dir" "$socket_dir")
+                  fi
+                fi
+              '')
+
+              (combinators.try-fwd-env "HERDR_ENV")
+              (combinators.try-fwd-env "HERDR_SOCKET_PATH")
+              (combinators.try-fwd-env "HERDR_PANE_ID")
+
+              (combinators.try-fwd-env "HERDR_PI_IDLE_DEBOUNCE_MS")
+              (combinators.try-fwd-env "HERDR_PI_RETRY_GRACE_MS")
+
+              (combinators.readonly-paths-from-var "PI_READ" ":")
+            ]
+          );
+      })
       (inputs.jailed-agents.lib.${pkgs.system}.makeJailedOpencode { name = "opencode"; })
       valkey
       git
