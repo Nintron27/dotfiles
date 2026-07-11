@@ -1,9 +1,29 @@
 # Jailed LLM agents for home-manager.
 #
-# Project specific toolchains should not be listed in extraPkgs.
-# At agent start try-fwd-dev-shell evaluates the nearest
-# flake's dev shell and injects only that shell's store closure.
-{ lib, pkgs, inputs, ... }:
+# Project toolchains should NOT listed in extraPkgs.
+# At agent start try-fwd-dev-shell looks for the nearest flake's
+# devShells.<system>.agent and injects that shell's packages
+# (plus runtime closures) into the jail.
+#
+# Convention (like README.md vs AGENTS.md):
+#   devShells.default  — human interactive shell (`nix develop`, direnv)
+#   devShells.agent    — tools for jailed agents (LSP, formatters, CLIs)
+#
+# If there is no flake or no `devShells.agent`, the agent still starts with
+# base packages + any extraPkgs only. shellHook is never run.
+# User env attrs on the shell (FOO = "…", or env.FOO) are forwarded; the
+# injector reads the derivation (`nix derivation show`), not print-dev-env.
+#
+# Overrides (see resolve-dev-shell.sh):
+#   JAIL_DEV_SHELL=0           disable
+#   JAIL_DEV_SHELL=.#default   use human shell instead
+#   JAIL_DEV_SHELL_DEBUG=1     resolve logs on stderr
+{
+  lib,
+  pkgs,
+  inputs,
+  ...
+}:
 
 let
   jailed = inputs.jailed-agents.lib.${pkgs.system};
@@ -35,9 +55,7 @@ let
     (combinators.readonly-paths-from-var "JAIL_READ" ":")
   ];
 
-  agentJailOptions = jailed.commonJailOptions
-    ++ herdrJailOptions
-    ++ [ try-fwd-dev-shell ];
+  agentJailOptions = jailed.commonJailOptions ++ herdrJailOptions ++ [ try-fwd-dev-shell ];
 in
 {
   home.packages = [
@@ -61,6 +79,7 @@ in
         xz
         nix
         nixfmt
+        python3
       ];
       baseJailOptions = agentJailOptions;
     })

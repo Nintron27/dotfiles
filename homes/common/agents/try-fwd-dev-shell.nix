@@ -1,5 +1,5 @@
-# Custom jail.nix combinator: inject the nearest flake dev shell into the jail
-# at agent start.
+# Custom jail.nix combinator: inject the nearest flake's devShells.agent
+# toolchain into the jail at agent start.
 #
 # Built the same way as complex upstream combinators (compose + add-runtime +
 # wrap-entry). See jail.nix:
@@ -7,24 +7,35 @@
 #   - readonly-paths-from-var         (runtime path discovery via add-runtime)
 #   - add-pkg-deps                    (PATH + runtime closure bookkeeping)
 #
-# Soft-fail: no flake / nix / eval error → agent starts with base extraPkgs only.
+# Default: nearest flake's #devShells.<system>.agent (see resolve-dev-shell.sh).
+# Soft-fail: no agent shell / nix / eval error → agent starts with base extraPkgs only.
+# shellHook is never run. User env comes from `nix derivation show` (declared
+# mkShell attrs), not from print-dev-env's stdenv dump.
 #
 # Usage:
 #   cd ~/project && grok
-#   JAIL_DEV_SHELL=.#foo grok
+#   grok /path/to/project              # no need to cd first
+#   JAIL_DEV_SHELL=.#default grok     # use human dev shell instead of .agent
+#   JAIL_DEV_SHELL=0 grok             # disable injection
 #   JAIL_FLAKE_ROOT=/path/to/flake grok
 #   JAIL_DEV_SHELL_MAX_DEPTH=5 grok
+#   JAIL_DEV_SHELL_DEBUG=1 grok       # stderr resolve logs
 
 { pkgs, combinators }:
 
 let
-  inherit (combinators) compose add-runtime add-cleanup wrap-entry;
+  inherit (combinators)
+    compose
+    add-runtime
+    add-cleanup
+    wrap-entry
+    ;
 
   resolveDevShell = pkgs.writeShellApplication {
     name = "jail-resolve-dev-shell";
     runtimeInputs = [
+      pkgs.nix # host daemon client; do not rely on parent PATH
       pkgs.jq
-      pkgs.gnugrep
       pkgs.coreutils
       pkgs.findutils # xargs
     ];
@@ -36,8 +47,10 @@ compose [
     JAIL_DEV_SHELL_ENV_HOST=$(mktemp)
     JAIL_DEV_SHELL_BINDS_HOST=$(mktemp)
 
+    # Pass agent argv so resolve can honor `grok /path/to/project` without cd.
     if ${resolveDevShell}/bin/jail-resolve-dev-shell \
          "$JAIL_DEV_SHELL_ENV_HOST" "$JAIL_DEV_SHELL_BINDS_HOST" \
+         "$@" \
        && [ -s "$JAIL_DEV_SHELL_ENV_HOST" ]; then
       RUNTIME_ARGS+=(--ro-bind "$JAIL_DEV_SHELL_ENV_HOST" /run/jail-dev-shell.env)
       RUNTIME_ARGS+=(--setenv JAIL_DEV_SHELL_ENV /run/jail-dev-shell.env)
