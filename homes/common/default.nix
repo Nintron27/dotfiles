@@ -3,6 +3,7 @@
 {
   imports = [
     ./packages.nix
+    ./agents
     ./alacritty.nix
     ./ghostty.nix
     ./hyprland
