@@ -26,9 +26,6 @@
   ] else []) ++ (if config.hyprlandSettings.workAutostart then [
     "[workspace 1 silent] brave"
     "[workspace 2 silent] $terminal"
-    "[workspace 3 silent] codium"
-    "[workspace 4 silent] obsidian"
-    "[workspace 5 silent] slack"
   ] else []);
 
   # Look & Feel

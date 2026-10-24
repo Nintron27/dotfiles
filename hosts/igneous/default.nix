@@ -86,7 +86,7 @@
   users.users.work = {
     isNormalUser = true;
     description = "work";
-    extraGroups = [ "networkmanager" "wheel" "audio" ];
+    extraGroups = [ "networkmanager" "wheel" "audio" "plugdev" ];
   };
 
   # TODO: Disable mouse debouncing

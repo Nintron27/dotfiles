@@ -133,13 +133,6 @@
     ] else []) ++ (if config.packageConfiguration.enableArgentum then [
       brightnessctl # Laptop only
     ] else []) ++ (if config.packageConfiguration.enableWork then [
-      # development
-      # shopify-cli
-      handbrake
-      ngrok
-
-      # un-categorized packages
-      openssl
       slack
       zoom-us
     ] else []);
