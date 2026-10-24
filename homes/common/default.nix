@@ -84,7 +84,6 @@
     #   style.catppuccin.enable = true;
     # };
 
-    # TODO: check this later for clean up of other stuff >>> programs.rofi =  import ./config/rofi/config.nix;
     catppuccin.rofi.enable = true;
     programs.rofi = {
       enable = true;
