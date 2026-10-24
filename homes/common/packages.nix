@@ -1,4 +1,4 @@
-{ lib, config, pkgs, inputs, ... }:
+{ lib, config, pkgs, ... }:
 {
   options.packageConfiguration = {
     enablePersonal = lib.mkOption {
@@ -68,6 +68,7 @@
       chromium
       yubikey-manager
       vesktop
+      grok-bot
       jdk17_headless
       obsidian
       darktable
@@ -108,6 +109,7 @@
       prettier
       nil
       gopls # go
+      rust-analyzer
       typescript-language-server
       vscode-langservers-extracted
       svelte-language-server

@@ -21,6 +21,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Unofficial packaging of the official Grok Bot AppImage.
+    # https://github.com/aijorgenson/grokbot-nixos
+    grok-bot = {
+      url = "github:aijorgenson/grokbot-nixos";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     flake-utils.url = "github:numtide/flake-utils";
     jail-nix.url = "sourcehut:~alexdavid/jail.nix";
     llm-agents.url = "github:numtide/llm-agents.nix";

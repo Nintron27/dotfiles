@@ -28,6 +28,7 @@
 
     nixpkgs.config.allowUnfree = true;
     nixpkgs.config.allowBroken= true;
+    nixpkgs.overlays = [ inputs.grok-bot.overlays.default ];
     # Allow EOL
     nixpkgs.config.permittedInsecurePackages = [
       "beekeeper-studio-5.3.4"
