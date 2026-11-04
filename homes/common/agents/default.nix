@@ -74,6 +74,7 @@ in
       pkg = inputs.llm-agents.packages.${pkgs.system}.grok;
       configPaths = [ "~/.grok" ];
       extraPkgs = with pkgs; [
+        github-cli
         patch
         zip
         xz

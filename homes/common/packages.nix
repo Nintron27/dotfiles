@@ -76,6 +76,7 @@
       spotify
 
       # Development
+      github-cli
       valkey
       git
       gnumake
