@@ -22,6 +22,7 @@
   lib,
   pkgs,
   inputs,
+  config,
   ...
 }:
 
@@ -87,6 +88,24 @@ in
 
     (jailed.makeJailedOpencode {
       name = "opencode";
+      baseJailOptions = agentJailOptions;
+    })
+  ]
+  # Work profile only, same gate as the old bare claude-code package.
+  # Command stays `claude` (llm-agents mainProgram). ~/.claude is mounted
+  # by makeJailedClaudeCode.
+  ++ lib.optionals config.packageConfiguration.enableWork [
+    (jailed.makeJailedClaudeCode {
+      name = "claude";
+      extraPkgs = with pkgs; [
+        github-cli
+        patch
+        zip
+        xz
+        nix
+        nixfmt
+        python3
+      ];
       baseJailOptions = agentJailOptions;
     })
   ];

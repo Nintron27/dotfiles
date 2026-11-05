@@ -65,7 +65,8 @@
       gimp
       # firefox
       brave
-      chromium
+      # chromium is built from source and is not in the binary cache right now.
+      # chromium
       yubikey-manager
       vesktop
       grok-bot
@@ -96,6 +97,7 @@
       postman
       turso-cli
       flyctl
+      spacetimedb
       bruno
       sqlc
       vscodium
