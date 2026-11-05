@@ -57,8 +57,51 @@ let
   ];
 
   agentJailOptions = jailed.commonJailOptions ++ herdrJailOptions ++ [ try-fwd-dev-shell ];
+
+  # Commit as the user, SSH-sign commits, and fetch/push over SSH using the
+  # dedicated ssh-agent-jail key below. See git-ssh.nix for one-time setup.
+  gitSshJailOptions = import ./git-ssh.nix {
+    inherit pkgs combinators;
+    userName = "Nintron";
+    userEmail = "nintron@sent.com";
+  };
+
+  # Holds only ~/.ssh/jail_ed25519 (auto-loaded, no passphrase). Separate from
+  # the host's normal agent (programs.ssh.startAgent) so the jail can't use
+  # any other key.
+  loadJailKey = pkgs.writeShellApplication {
+    name = "ssh-agent-jail-load-key";
+    runtimeInputs = [
+      pkgs.openssh
+      pkgs.coreutils
+    ];
+    text = ''
+      sock=$1
+      key=$2
+      for _ in $(seq 50); do
+        [ -S "$sock" ] && break
+        sleep 0.1
+      done
+      if [ -f "$key" ]; then
+        SSH_AUTH_SOCK="$sock" ssh-add "$key" </dev/null
+      else
+        echo "ssh-agent-jail: $key not found; agent left empty" >&2
+      fi
+    '';
+  };
 in
 {
+  systemd.user.services.ssh-agent-jail = lib.mkIf config.packageConfiguration.enableWork {
+    Unit.Description = "SSH agent for jailed coding agents (only ~/.ssh/jail_ed25519)";
+    Service = {
+      ExecStartPre = "${pkgs.coreutils}/bin/rm -f %t/ssh-agent-jail";
+      ExecStart = "${pkgs.openssh}/bin/ssh-agent -D -a %t/ssh-agent-jail";
+      # "-": a missing or passphrase-protected key must not fail the agent.
+      ExecStartPost = "-${loadJailKey}/bin/ssh-agent-jail-load-key %t/ssh-agent-jail %h/.ssh/jail_ed25519";
+    };
+    Install.WantedBy = [ "default.target" ];
+  };
+
   home.packages = [
     (jailed.makeJailedPi {
       name = "pi";
@@ -106,7 +149,7 @@ in
         nixfmt
         python3
       ];
-      baseJailOptions = agentJailOptions;
+      baseJailOptions = agentJailOptions ++ [ gitSshJailOptions ];
     })
   ];
 }
