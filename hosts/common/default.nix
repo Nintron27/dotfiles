@@ -19,4 +19,7 @@
     ./zsa-board.nix
     ./bluetooth.nix
   ];
+
+  # Hytale's Linux launcher is a Flatpak bundle from accounts.hytale.com.
+  services.flatpak.enable = true;
 }
