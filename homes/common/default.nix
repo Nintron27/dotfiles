@@ -57,6 +57,8 @@
 
       brave.enable = true;
     };
+    # catppuccin.cursors sets the cursor theme; enable generating its config.
+    home.pointerCursor.enable = true;
 
     # gammastep
     services.gammastep = {
@@ -91,7 +93,7 @@
       enable = true;
       # package = pkgs.rofi-wayland;
   
-      extraConfig = {
+      settings = {
         modi = "drun";
         show-icons = true;
         display-drun = " Apps ";

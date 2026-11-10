@@ -24,7 +24,7 @@
 }:
 
 let
-  jailed = inputs.jailed-agents.lib.${pkgs.system};
+  jailed = inputs.jailed-agents.lib.${pkgs.stdenv.hostPlatform.system};
   combinators = jailed.internals.jail.combinators;
 
   devShell = import ./dev-shell.nix {
@@ -94,7 +94,7 @@ in
     (jailed.makeJailedAgent {
       name = "grok";
       enableNix = true;
-      pkg = inputs.llm-agents.packages.${pkgs.system}.grok;
+      pkg = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.grok;
       configPaths = [ "~/.grok" ];
       extraPkgs = with pkgs; [
         github-cli

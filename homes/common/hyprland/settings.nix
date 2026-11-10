@@ -19,7 +19,6 @@
   # Startup actions
   "exec-once" = [
     "hyprpaper" # TODO: Unload preloaded after? idk
-    "solaar -w hide"
     "waybar"
   ] ++ (if config.isArgentum then [
     "blueman-applet"

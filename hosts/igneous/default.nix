@@ -11,7 +11,6 @@
       ./hardware-configuration.nix
 
       ../common
-      ../features/logitech.nix
     ];
 
   # Bootloader.
