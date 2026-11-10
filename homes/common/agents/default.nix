@@ -1,23 +1,20 @@
 # Jailed LLM agents for home-manager.
 #
-# Project toolchains should NOT listed in extraPkgs.
-# At agent start try-fwd-dev-shell looks for the nearest flake's
-# devShells.<system>.agent and injects that shell's packages
-# (plus runtime closures) into the jail.
+# Project toolchains should NOT be listed in extraPkgs. Each agent starts
+# inside the dev shell of the flake in the current directory
+# instead (see dev-shell.nix):
 #
-# Convention (like README.md vs AGENTS.md):
 #   devShells.default  — human interactive shell (`nix develop`, direnv)
-#   devShells.agent    — tools for jailed agents (LSP, formatters, CLIs)
+#   devShells.agent    — what agents get; usually
+#                        mkShell { inputsFrom = [ default ]; packages = [ … ]; }
 #
-# If there is no flake or no `devShells.agent`, the agent still starts with
-# base packages + any extraPkgs only. shellHook is never run.
-# User env attrs on the shell (FOO = "…", or env.FOO) are forwarded; the
-# injector reads the derivation (`nix derivation show`), not print-dev-env.
+# Inside the jail the agent runs as `nix develop .#agent --command <agent>`,
+# so it sees exactly the shell you would. No agent shell: base packages only.
 #
-# Overrides (see resolve-dev-shell.sh):
-#   JAIL_DEV_SHELL=0           disable
-#   JAIL_DEV_SHELL=.#default   use human shell instead
-#   JAIL_DEV_SHELL_DEBUG=1     resolve logs on stderr
+# Overrides:
+#   JAIL_DEV_SHELL=.#default   use another shell
+#   JAIL_DEV_SHELL=0           no dev shell
+#   JAIL_READ=/a:/b            extra read-only paths
 {
   lib,
   pkgs,
@@ -30,7 +27,7 @@ let
   jailed = inputs.jailed-agents.lib.${pkgs.system};
   combinators = jailed.internals.jail.combinators;
 
-  try-fwd-dev-shell = import ./try-fwd-dev-shell.nix {
+  devShell = import ./dev-shell.nix {
     inherit pkgs combinators;
   };
 
@@ -56,7 +53,9 @@ let
     (combinators.readonly-paths-from-var "JAIL_READ" ":")
   ];
 
-  agentJailOptions = jailed.commonJailOptions ++ herdrJailOptions ++ [ try-fwd-dev-shell ];
+  # Every agent here must also set `enableNix = true;` (dev-shell.nix needs the
+  # Nix daemon and /nix inside the jail).
+  agentJailOptions = jailed.commonJailOptions ++ herdrJailOptions ++ [ devShell ];
 
   # Commit as the user, SSH-sign commits, and fetch/push over SSH using the
   # dedicated ssh-agent-jail key below. See git-ssh.nix for one-time setup.
@@ -105,6 +104,7 @@ in
   home.packages = [
     (jailed.makeJailedPi {
       name = "pi";
+      enableNix = true;
       extraPkgs = [ ];
       baseJailOptions = agentJailOptions ++ [
         (combinators.try-fwd-env "HERDR_PI_IDLE_DEBOUNCE_MS")
@@ -115,6 +115,7 @@ in
     # Grok Build via llm-agents.nix; no makeJailedGrok yet.
     (jailed.makeJailedAgent {
       name = "grok";
+      enableNix = true;
       pkg = inputs.llm-agents.packages.${pkgs.system}.grok;
       configPaths = [ "~/.grok" ];
       extraPkgs = with pkgs; [
@@ -122,7 +123,6 @@ in
         patch
         zip
         xz
-        nix
         nixfmt
         python3
       ];
@@ -131,6 +131,7 @@ in
 
     (jailed.makeJailedOpencode {
       name = "opencode";
+      enableNix = true;
       baseJailOptions = agentJailOptions;
     })
   ]
@@ -140,12 +141,12 @@ in
   ++ lib.optionals config.packageConfiguration.enableWork [
     (jailed.makeJailedClaudeCode {
       name = "claude";
+      enableNix = true;
       extraPkgs = with pkgs; [
         github-cli
         patch
         zip
         xz
-        nix
         nixfmt
         python3
       ];
