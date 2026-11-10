@@ -11,7 +11,6 @@
     ./waybar
     ./helix
     ./zellij
-    ./herdr
     ./lf
   ];
 

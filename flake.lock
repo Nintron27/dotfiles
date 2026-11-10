@@ -111,27 +111,6 @@
         "type": "github"
       }
     },
-    "herdr": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1781172763,
-        "narHash": "sha256-QqjC/6vy6X7LAYn3YGmBJJTICeu4cj5qSX/DBaSlIfA=",
-        "owner": "ogulcancelik",
-        "repo": "herdr",
-        "rev": "8b99847619235359f4aa87215feac60ac2784499",
-        "type": "github"
-      },
-      "original": {
-        "owner": "ogulcancelik",
-        "ref": "v0.6.10",
-        "repo": "herdr",
-        "type": "github"
-      }
-    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -321,7 +300,6 @@
         "catppuccin": "catppuccin",
         "flake-utils": "flake-utils",
         "grok-bot": "grok-bot",
-        "herdr": "herdr",
         "home-manager": "home-manager",
         "jail-nix": "jail-nix",
         "jailed-agents": "jailed-agents",

@@ -31,20 +31,8 @@ let
     inherit pkgs combinators;
   };
 
-  # Optional herdr + terminal plumbing shared by all agents.
-  herdrJailOptions = [
-    (combinators.add-runtime ''
-      if [ -n "''${HERDR_SOCKET_PATH:-}" ]; then
-        socket_dir=$(dirname "''${HERDR_SOCKET_PATH}")
-        if [ -d "$socket_dir" ]; then
-          RUNTIME_ARGS+=(--bind "$socket_dir" "$socket_dir")
-        fi
-      fi
-    '')
-    (combinators.try-fwd-env "HERDR_ENV")
-    (combinators.try-fwd-env "HERDR_SOCKET_PATH")
-    (combinators.try-fwd-env "HERDR_PANE_ID")
-
+  # Terminal plumbing shared by all agents.
+  terminalJailOptions = [
     # base only forwards TERM; agents need full color capability detection
     (combinators.try-fwd-env "TERM")
     (combinators.try-fwd-env "COLORTERM")
@@ -55,7 +43,7 @@ let
 
   # Every agent here must also set `enableNix = true;` (dev-shell.nix needs the
   # Nix daemon and /nix inside the jail).
-  agentJailOptions = jailed.commonJailOptions ++ herdrJailOptions ++ [ devShell ];
+  agentJailOptions = jailed.commonJailOptions ++ terminalJailOptions ++ [ devShell ];
 
   # Commit as the user, SSH-sign commits, and fetch/push over SSH using the
   # dedicated ssh-agent-jail key below. See git-ssh.nix for one-time setup.
@@ -106,10 +94,7 @@ in
       name = "pi";
       enableNix = true;
       extraPkgs = [ ];
-      baseJailOptions = agentJailOptions ++ [
-        (combinators.try-fwd-env "HERDR_PI_IDLE_DEBOUNCE_MS")
-        (combinators.try-fwd-env "HERDR_PI_RETRY_GRACE_MS")
-      ];
+      baseJailOptions = agentJailOptions;
     })
 
     # Grok Build via llm-agents.nix; no makeJailedGrok yet.

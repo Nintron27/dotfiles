@@ -16,11 +16,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    herdr = {
-      url = "github:ogulcancelik/herdr/v0.6.10";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     # Unofficial packaging of the official Grok Bot AppImage.
     # https://github.com/aijorgenson/grokbot-nixos
     grok-bot = {
