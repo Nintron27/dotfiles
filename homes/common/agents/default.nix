@@ -90,13 +90,6 @@ in
   };
 
   home.packages = [
-    (jailed.makeJailedPi {
-      name = "pi";
-      enableNix = true;
-      extraPkgs = [ ];
-      baseJailOptions = agentJailOptions;
-    })
-
     # Grok Build via llm-agents.nix; no makeJailedGrok yet.
     (jailed.makeJailedAgent {
       name = "grok";
@@ -111,12 +104,6 @@ in
         nixfmt
         python3
       ];
-      baseJailOptions = agentJailOptions;
-    })
-
-    (jailed.makeJailedOpencode {
-      name = "opencode";
-      enableNix = true;
       baseJailOptions = agentJailOptions;
     })
   ]
