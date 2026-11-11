@@ -106,11 +106,7 @@ in
       ];
       baseJailOptions = agentJailOptions;
     })
-  ]
-  # Work profile only, same gate as the old bare claude-code package.
-  # Command stays `claude` (llm-agents mainProgram). ~/.claude is mounted
-  # by makeJailedClaudeCode.
-  ++ lib.optionals config.packageConfiguration.enableWork [
+
     (jailed.makeJailedClaudeCode {
       name = "claude";
       enableNix = true;
