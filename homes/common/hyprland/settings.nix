@@ -4,14 +4,21 @@ let
   lua = lib.generators.mkLuaInline;
 
   # keys is a Lua expression for the bind string. action is a Lua dispatcher expression.
-  bind =
-    keys: action: flags:
-    {
-      _args = [
-        (lua keys)
-        (lua action)
-      ] ++ lib.optional (flags != null) flags;
-    };
+  bind = keys: action: {
+    _args = [
+      (lua keys)
+      (lua action)
+    ];
+  };
+
+  # Same as bind, with an hl.bind options table (locked, repeating, mouse, ...).
+  bindWith = keys: action: flags: {
+    _args = [
+      (lua keys)
+      (lua action)
+      flags
+    ];
+  };
 
   key = k: ''"${k}"'';
   mod = k: ''mainMod .. " + ${k}"'';
@@ -27,14 +34,14 @@ let
         ws = toString (i + 1);
       in
       [
-        (bind (mod keyName) ''hl.dsp.focus({ workspace = "${ws}" })'' null)
-        (bind (modShift keyName) ''hl.dsp.window.move({ workspace = "${ws}" })'' null)
+        (bind (mod keyName) ''hl.dsp.focus({ workspace = "${ws}" })'')
+        (bind (modShift keyName) ''hl.dsp.window.move({ workspace = "${ws}" })'')
       ]
     ) 10
   );
 
+  # hyprpaper is started by services.hyprpaper (systemd), so it is not launched here.
   startupCommands = [
-    ''hl.exec_cmd("hyprpaper")''
     ''hl.exec_cmd("waybar")''
   ]
   ++ lib.optional config.isArgentum ''hl.exec_cmd("blueman-applet")''
@@ -43,11 +50,7 @@ let
     ''hl.exec_cmd(terminal, { workspace = "2 silent" })''
   ];
 
-  startup = ''
-    function()
-    ${lib.concatMapStrings (cmd: "\n      ${cmd}") startupCommands}
-    end
-  '';
+  startup = "function()\n" + lib.concatMapStrings (cmd: "  ${cmd}\n") startupCommands + "end";
 in
 {
   mainMod = {
@@ -117,60 +120,60 @@ in
   # bindel/bindl/bindm are hyprlang keywords. Lua takes the same flags on hl.bind.
   bind =
     [
-      (bind (mod "R") (exec "rofi -show drun") null)
-      (bind (mod "RETURN") ''hl.dsp.exec_cmd(terminal)'' null)
-      (bind (mod "Q") ''hl.dsp.window.close()'' null)
-      (bind (mod "L") (exec "hyprlock") null)
-      (bind (modShift "X") ''hl.dsp.exit()'' null)
+      (bind (mod "R") (exec "rofi -show drun"))
+      (bind (mod "RETURN") ''hl.dsp.exec_cmd(terminal)'')
+      (bind (mod "Q") ''hl.dsp.window.close()'')
+      (bind (mod "L") (exec "hyprlock"))
+      (bind (modShift "X") ''hl.dsp.exit()'')
 
-      (bind (key "Print") ''hl.dsp.exec_cmd("grim -g \"$(slurp -d)\" - | wl-copy")'' null)
+      (bind (key "Print") ''hl.dsp.exec_cmd("grim -g \"$(slurp -d)\" - | wl-copy")'')
 
-      (bind (mod "N") ''hl.dsp.focus({ direction = "left" })'' null)
-      (bind (mod "E") ''hl.dsp.focus({ direction = "down" })'' null)
-      (bind (mod "I") ''hl.dsp.focus({ direction = "up" })'' null)
-      (bind (mod "O") ''hl.dsp.focus({ direction = "right" })'' null)
+      (bind (mod "N") ''hl.dsp.focus({ direction = "left" })'')
+      (bind (mod "E") ''hl.dsp.focus({ direction = "down" })'')
+      (bind (mod "I") ''hl.dsp.focus({ direction = "up" })'')
+      (bind (mod "O") ''hl.dsp.focus({ direction = "right" })'')
 
-      (bind (mod "F") ''hl.dsp.window.fullscreen({ mode = "fullscreen" })'' null)
-      (bind (modShift "F") ''hl.dsp.window.float({ action = "toggle" })'' null)
+      (bind (mod "F") ''hl.dsp.window.fullscreen({ mode = "fullscreen" })'')
+      (bind (modShift "F") ''hl.dsp.window.float({ action = "toggle" })'')
 
-      (bind (modShift "N") ''hl.dsp.window.resize({ x = -32, y = 0, relative = true })'' null)
-      (bind (modShift "E") ''hl.dsp.window.resize({ x = 0, y = 32, relative = true })'' null)
-      (bind (modShift "I") ''hl.dsp.window.resize({ x = 0, y = -32, relative = true })'' null)
-      (bind (modShift "O") ''hl.dsp.window.resize({ x = 32, y = 0, relative = true })'' null)
+      (bind (modShift "N") ''hl.dsp.window.resize({ x = -32, y = 0, relative = true })'')
+      (bind (modShift "E") ''hl.dsp.window.resize({ x = 0, y = 32, relative = true })'')
+      (bind (modShift "I") ''hl.dsp.window.resize({ x = 0, y = -32, relative = true })'')
+      (bind (modShift "O") ''hl.dsp.window.resize({ x = 32, y = 0, relative = true })'')
     ]
     ++ workspaceBinds
     ++ [
-      (bind (key "XF86AudioRaiseVolume") (exec "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+") {
+      (bindWith (key "XF86AudioRaiseVolume") (exec "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+") {
         locked = true;
         repeating = true;
       })
-      (bind (key "XF86AudioLowerVolume") (exec "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-") {
+      (bindWith (key "XF86AudioLowerVolume") (exec "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-") {
         locked = true;
         repeating = true;
       })
-      (bind (key "XF86AudioMute") (exec "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle") {
+      (bindWith (key "XF86AudioMute") (exec "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle") {
         locked = true;
         repeating = true;
       })
     ]
     ++ lib.optionals config.isArgentum [
-      (bind (key "XF86MonBrightnessUp") (exec "brightnessctl s +5%") {
+      (bindWith (key "XF86MonBrightnessUp") (exec "brightnessctl s +5%") {
         locked = true;
         repeating = true;
       })
-      (bind (key "XF86MonBrightnessDown") (exec "brightnessctl s 5%-") {
+      (bindWith (key "XF86MonBrightnessDown") (exec "brightnessctl s 5%-") {
         locked = true;
         repeating = true;
       })
     ]
     ++ [
-      (bind (key "XF86AudioPlay") (exec "playerctl play-pause") { locked = true; })
-      (bind (key "XF86AudioNext") (exec "playerctl next") { locked = true; })
-      (bind (key "XF86AudioPrev") (exec "playerctl previous") { locked = true; })
-      (bind (modShift "S") (exec "systemctl suspend") { locked = true; })
+      (bindWith (key "XF86AudioPlay") (exec "playerctl play-pause") { locked = true; })
+      (bindWith (key "XF86AudioNext") (exec "playerctl next") { locked = true; })
+      (bindWith (key "XF86AudioPrev") (exec "playerctl previous") { locked = true; })
+      (bindWith (modShift "S") (exec "systemctl suspend") { locked = true; })
 
-      (bind (mod "mouse:272") ''hl.dsp.window.drag()'' { mouse = true; })
-      (bind (mod "mouse:273") ''hl.dsp.window.resize()'' { mouse = true; })
+      (bindWith (mod "mouse:272") ''hl.dsp.window.drag()'' { mouse = true; })
+      (bindWith (mod "mouse:273") ''hl.dsp.window.resize()'' { mouse = true; })
     ];
 
   window_rule = [
