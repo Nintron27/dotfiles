@@ -14,10 +14,16 @@
     catppuccin.hyprland.enable = false;
     wayland.windowManager.hyprland = {
       enable = true;
-      configType = "hyprlang";
+      # Hyprland 0.57 loads hyprland.lua only. hyprlang .conf files are ignored,
+      # and a missing lua config is replaced by an example that warns on startup.
+      configType = "lua";
 
       settings = import ./settings.nix { inherit config lib; };
     };
+
+    # The example config Hyprland writes is a regular file, so activation
+    # refuses to replace it unless this managed file is forced into place.
+    xdg.configFile."hypr/hyprland.lua".force = true;
 
     # Conditional left, as Hyprland cursor seems to be too big now on v45
     # home.pointerCursor.size = if config.isArgentum then 24 else 24;
