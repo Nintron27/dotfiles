@@ -10,7 +10,8 @@
     [
       ./hardware-configuration.nix
 
-      ../common
+      ../common/base
+      ../common/desktop
     ];
 
   # Bootloader.
@@ -29,25 +30,27 @@
   networking.firewall.allowedUDPPorts = [ 53317 ];
   networking.firewall.allowedTCPPorts = [ 53317 ];
 
-  # security.polkit.enable = true;
-
-  # Set your time zone.
-  time.timeZone = "America/New_York";
-
-  # Select internationalisation properties.
-  i18n.defaultLocale = "en_US.UTF-8";
-
-  i18n.extraLocaleSettings = {
-    LC_ADDRESS = "en_US.UTF-8";
-    LC_IDENTIFICATION = "en_US.UTF-8";
-    LC_MEASUREMENT = "en_US.UTF-8";
-    LC_MONETARY = "en_US.UTF-8";
-    LC_NAME = "en_US.UTF-8";
-    LC_NUMERIC = "en_US.UTF-8";
-    LC_PAPER = "en_US.UTF-8";
-    LC_TELEPHONE = "en_US.UTF-8";
-    LC_TIME = "en_US.UTF-8";
+  # WireGuard tunnel to arx's boot-time unlock prompt (see hosts/arx/initrd-unlock.nix).
+  # Only reaches 10.99.0.1; all other traffic is untouched.
+  #   sudo systemctl start wg-quick-arx-unlock && ssh arx-unlock-wg
+  networking.wg-quick.interfaces.arx-unlock = {
+    autostart = false;
+    address = [ "10.99.0.2/32" ];
+    # Generated on argentum; never leaves this machine.
+    privateKeyFile = "/etc/wireguard/arx-unlock.key";
+    peers = [
+      {
+        # arx initrd WireGuard public key
+        publicKey = "a5omECGi7fudcizNorkLKlznvgeMYxWoAAbkdW9eLw4=";
+        # TODO: switch to the dynamic DNS name once it exists.
+        endpoint = "10.0.0.162:51820";
+        allowedIPs = [ "10.99.0.1/32" ];
+        persistentKeepalive = 25;
+      }
+    ];
   };
+
+  # security.polkit.enable = true;
 
   systemd.sleep.settings.Sleep = {
     HibernateDelaySec = "3600s";

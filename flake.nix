@@ -11,6 +11,10 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     kmonad = {
       url = "github:kmonad/kmonad?dir=nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -61,6 +65,18 @@
           ./hosts/argentum
           nixos-hardware.nixosModules.framework-13-7040-amd
           kmonad.nixosModules.default
+        ];
+      };
+      arx = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+
+        specialArgs = {
+          inherit inputs;
+        };
+
+        modules = [
+          ./hosts/arx
+          inputs.disko.nixosModules.disko
         ];
       };
     };

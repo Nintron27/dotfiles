@@ -1,23 +1,14 @@
-{ 
-  inputs,
-  ...
-}: {
+# Configuration for graphical machines (igneous, argentum).
+{
   imports = [
-    inputs.home-manager.nixosModules.home-manager
-    inputs.catppuccin.nixosModules.catppuccin
-
-    ./nix.nix
     ./virtualisation.nix
     ./hyprland.nix
     ./sddm.nix
-    ./ssh.nix
     ./fonts.nix
-    ./fish.nix
-    ./catppuccin.nix
-    ./networking.nix
     ./pipewire.nix
     ./zsa-board.nix
     ./bluetooth.nix
+    ./arx-ssh.nix
   ];
 
   # Hytale's Linux launcher is a Flatpak bundle from accounts.hytale.com.
