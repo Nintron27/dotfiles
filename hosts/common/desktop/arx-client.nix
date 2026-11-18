@@ -55,6 +55,8 @@ in
         # keys are added to the agent on first use.
         ForwardAgent yes
         AddKeysToAgent yes
+        # Tell arx this terminal does truecolor (SSH only sends TERM by default).
+        SendEnv COLORTERM
         # Same machine either way; check its pinned host key.
         HostKeyAlias arx
         # Reuse one connection for 10 minutes, so deploys don't need a

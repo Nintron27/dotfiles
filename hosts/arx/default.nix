@@ -34,6 +34,10 @@
     trim.enable = true;
   };
 
+  # Terminfo for every terminal (ghostty, alacritty, ...), so TUIs over SSH
+  # know what the connecting terminal supports.
+  environment.enableAllTerminfo = true;
+
   # Swap in compressed RAM rather than on a disk partition.
   zramSwap.enable = true;
 
@@ -45,6 +49,8 @@
       KbdInteractiveAuthentication = false;
       # Root only with the YubiKeys, for deploys (`--target-host arx-root`).
       PermitRootLogin = "prohibit-password";
+      # Let clients pass their truecolor support (see arx-client.nix SendEnv).
+      AcceptEnv = [ "COLORTERM" ];
     };
   };
 
