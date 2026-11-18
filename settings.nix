@@ -3,7 +3,7 @@
 #
 # Only things used in more than one place belong here; single-use values
 # (disk IDs, ZFS options, hostId, ...) stay next to the code that uses them.
-# Everything here is public: never put secrets in this file (use sops).
+# Everything here is public: never put secrets in this file (use sops, duh).
 {
   users.nintron = {
     # Git identity, used by every user on every machine (homes/common/cli/git.nix).
