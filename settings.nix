@@ -53,7 +53,7 @@
       # Each device generates its own private key; only the public key goes here.
       peers.argentum = {
         address = "10.100.0.2";
-        publicKey = "TODO-argentum-vpn-public-key";
+        publicKey = "j9TtnPrFFCSUu21IlltRnxnxvl/zSH3MLS/DdvGDY0M=";
       };
     };
   };
