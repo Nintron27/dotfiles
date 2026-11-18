@@ -18,6 +18,11 @@
     lanIp = "10.0.0.162";
     # Public name, kept updated by hosts/arx/ddns.nix.
     domain = "arx.stelo.finance";
+    # UDP port forwarded on the router. Shared by the unlock tunnel (initrd
+    # only) and the main VPN (running system only); they never overlap.
+    wireguardPort = 51820;
+    # arx's normal SSH host key (/etc/ssh/ssh_host_ed25519_key.pub); pinned on clients.
+    sshHostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINo6iaFd8JhePo17S7gueqMaDnrj+oUZwv3Lf1olq4Lb";
 
     # Boot-time remote unlock
     unlock = {
@@ -26,7 +31,6 @@
       sshHostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID1FMbjqRaQa3aRXbTIoDlRhC2z+yaYyrOshripqclU2";
 
       wireguard = {
-        port = 51820;
         prefixLength = 24;
         address = "10.99.0.1";
         publicKey = "a5omECGi7fudcizNorkLKlznvgeMYxWoAAbkdW9eLw4=";
@@ -36,6 +40,20 @@
           address = "10.99.0.2";
           publicKey = "dr4rwLEFdTTXCPbgSbfE6UZ34NPW685XCy5acqYVnwc=";
         };
+      };
+    };
+
+    # Main WireGuard VPN (hosts/arx/vpn.nix). Split tunnel: peers only route
+    # traffic for arx itself through it.
+    vpn = {
+      prefixLength = 24;
+      address = "10.100.0.1";
+      # Public half of the `wireguard-private-key` secret in secrets/arx.yaml.
+      publicKey = "PH5NC/USs+VAP4aPdJbuhTFunO/qTVwtonUylkzMsiw=";
+      # Each device generates its own private key; only the public key goes here.
+      peers.argentum = {
+        address = "10.100.0.2";
+        publicKey = "TODO-argentum-vpn-public-key";
       };
     };
   };

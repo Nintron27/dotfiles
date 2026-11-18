@@ -71,7 +71,7 @@ in
           };
           wireguardConfig = {
             PrivateKeyFile = wgKey;
-            ListenPort = wg.port;
+            ListenPort = settings.hosts.arx.wireguardPort;
           };
           wireguardPeers = wgPeers;
         };

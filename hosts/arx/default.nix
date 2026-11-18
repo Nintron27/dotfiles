@@ -6,6 +6,7 @@
     ./disko.nix
     ./initrd-unlock.nix
     ./ddns.nix
+    ./vpn.nix
 
     ../common/base
   ];
