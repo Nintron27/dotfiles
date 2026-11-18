@@ -1,12 +1,13 @@
-{ pkgs, lib, config, isArgentum, inputs, ... }:
+{ pkgs, lib, config, isArgentum, headless, inputs, ... }:
 {
   imports = [
-    (import ../common { inherit pkgs lib config inputs; username = "work"; } )
+    (import ../common { inherit pkgs lib config inputs headless; username = "work"; } )
   ];
-  # Autostart work apps on correct monitors
-  hyprlandSettings.workAutostart = true;
-
   packageConfiguration.enableWork = true;
 
   isArgentum = isArgentum;
+}
+// lib.optionalAttrs (!headless) {
+  # Autostart work apps on correct monitors (Hyprland only exists on desktops)
+  hyprlandSettings.workAutostart = true;
 }

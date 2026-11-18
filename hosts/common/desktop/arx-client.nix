@@ -1,6 +1,6 @@
 # Client side of reaching arx, for the desktops.
 #
-#   ssh arx              normal login as nintron, over the LAN
+#   ssh arx              normal login (as your local user), over the LAN
 #   ssh arx-vpn          normal login, through the arx-vpn WireGuard tunnel
 #   ssh arx-unlock       unlock prompt at boot, over the LAN
 #   ssh arx-unlock-wg    unlock prompt at boot, through the arx-unlock WireGuard tunnel
@@ -49,7 +49,11 @@ in
         IdentitiesOnly yes
 
       Host arx arx-vpn
-        User nintron
+        # No User: you log in as whoever you are locally (nintron or work).
+        # Forward the agent so git on arx can use this machine's YubiKey;
+        # keys are added to the agent on first use.
+        ForwardAgent yes
+        AddKeysToAgent yes
         # Same machine either way; check its pinned host key.
         HostKeyAlias arx
         # Reuse one connection for 10 minutes, so deploys don't need a

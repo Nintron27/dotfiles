@@ -6,6 +6,11 @@
 # Everything here is public: never put secrets in this file (use sops).
 {
   users.nintron = {
+    # Git identity, used by every user on every machine (homes/common/cli/git.nix).
+    git = {
+      name = "Nintron";
+      email = "nintron@sent.com";
+    };
     sshKeys = [
       "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIF0byXBSsPic/pQcLK+XcyxWcyGG5lHclvrB3Hq9fnCuAAAAC3NzaDpuaW50cm9u nintron@igneous"
       "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIB/poYjgIGBsxTQUsHy47b8gXmLNhGc9PgXStdfp2aj+AAAAEnNzaDpuaW50cm9uX2JhY2t1cA== nintron@igneous"

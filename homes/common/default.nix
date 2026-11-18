@@ -1,18 +1,9 @@
-{ pkgs, lib, username, inputs, ... }:
+# Home Manager config shared by every user. Terminal setup (./cli) goes
+# everywhere; the graphical setup (./desktop) is skipped on headless hosts (arx).
+{ pkgs, lib, username, inputs, headless ? false, ... }:
 
 {
-  imports = [
-    ./packages.nix
-    ./agents
-    ./alacritty.nix
-    ./ghostty.nix
-    ./hyprland
-    ./dunst
-    ./waybar
-    ./helix
-    ./zellij
-    ./lf
-  ];
+  imports = [ ./cli ] ++ lib.optional (!headless) ./desktop;
 
   options.isArgentum = lib.mkOption {
     default = false;
@@ -41,103 +32,5 @@
 
     home.username = username;
     home.homeDirectory = "/home/${username}";
-
-    # Enable finding installed fonts
-    fonts.fontconfig.enable = true;
-
-    # catppuccin
-    catppuccin = {
-      autoEnable = true;
-      enable = true;
-      flavor = "mocha";
-      accent = "mauve";
-
-      cursors.enable = true;
-      cursors.accent = "light";
-
-      brave.enable = true;
-    };
-    # catppuccin.cursors sets the cursor theme; enable generating its config.
-    home.pointerCursor.enable = true;
-
-    # gammastep
-    services.gammastep = {
-      enable = true;
-      tray = true;
-
-      dawnTime = "07:30";
-      duskTime = "20:00";
-
-      temperature = {
-        day = 6000;
-        night = 3300;
-      };
-    };
-
-
-    # GTK 2/3
-    gtk = {
-      enable = true;
-    };
-
-    # QT, sadly breaks XDPH currently
-    # qt = {
-    #   enable = true;
-    #   platformTheme.name = "kvantum";
-    #   style.name = "kvantum";
-    #   style.catppuccin.enable = true;
-    # };
-
-    catppuccin.rofi.enable = true;
-    programs.rofi = {
-      enable = true;
-      # package = pkgs.rofi-wayland;
-  
-      settings = {
-        modi = "drun";
-        show-icons = true;
-        display-drun = " Apps ";
-        drun-display-format = "{icon} {name}";
-        disable-history = false;
-        hide-scrollbar = true;
-      };
-    };
-
-    # fish
-    catppuccin.fish.enable = true;
-    programs.fish = {
-      enable = true;
-      interactiveShellInit = ''
-        set fish_greeting # Disable greeting
-        export EDITOR=hx
-        # Set PATH to add .local/bin
-        export PATH="$PATH:/home/${username}/.local/bin"
-      '';
-    };
-
-    # direnv
-    programs.direnv.enable = true;
-    programs.direnv.nix-direnv.enable = true;
-
-    # starship
-    catppuccin.starship.enable = true;
-    programs.starship = {
-      enable = true;
-      enableFishIntegration = true;
-      settings = {
-        add_newline = false;
-      };
-    };
-
-    catppuccin.lazygit.enable = true;
-    programs.lazygit = {
-      enable = true;
-      settings = { };
-    };
-
-    # custom scripts
-    home.file.".local/bin" = {
-      source = ./scripts;
-    };
   };
 }

@@ -1,5 +1,5 @@
 # arx: headless homelab server (NAS, Hytale server, remote work box).
-{ lib, pkgs, settings, ... }:
+{ inputs, lib, pkgs, settings, ... }:
 {
   imports = [
     ./hardware-configuration.nix
@@ -52,6 +52,31 @@
     description = "nintron";
     extraGroups = [ "wheel" "networkmanager" ];
     openssh.authorizedKeys.keys = settings.users.nintron.sshKeys;
+  };
+  # Professional work. Same YubiKeys; deliberately not in wheel, since
+  # administering arx happens as nintron.
+  users.users.work = {
+    isNormalUser = true;
+    description = "work";
+    openssh.authorizedKeys.keys = settings.users.nintron.sshKeys;
+  };
+
+  # Same terminal environment as the desktops (fish, helix, zellij, dev
+  # tools, agents); the graphical half of homes/common is skipped.
+  home-manager = {
+    extraSpecialArgs = {
+      inherit inputs settings;
+      isArgentum = false;
+      headless = true;
+    };
+    users.nintron.imports = [
+      ../../homes/nintron/home.nix
+      inputs.catppuccin.homeModules.catppuccin
+    ];
+    users.work.imports = [
+      ../../homes/work/home.nix
+      inputs.catppuccin.homeModules.catppuccin
+    ];
   };
 
   # Login is key-only (no account password exists), so let wheel use sudo

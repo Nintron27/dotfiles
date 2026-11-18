@@ -1,3 +1,5 @@
+# Terminal packages, installed on every machine (desktops and arx).
+# Graphical packages live in ../desktop/packages.nix.
 { lib, config, pkgs, ... }:
 {
   options.packageConfiguration = {
@@ -26,55 +28,16 @@
 
   config = {
     home.packages = with pkgs; [
-      # desktop stuff
-      v4l-utils
-      qpwgraph
-      i3lock
-      playerctl
-      feh
-      grim
-      slurp
-      wl-clipboard
       wireguard-tools
 
-      # This is where I would put my fonts, IF 25.05 DIDNT MOVE IT ON ME
-      # fira-code
-      # fira-code-symbols
-      # nerd-fonts.fira-code
-      # (nerdfonts.override { fonts = [ "FiraCode" ]; })
-
       # Random
-      filezilla
       jrnl
       htop
-      proton-vpn
-      # mullvad-vpn
-      # monero-gui
       wget
-      vlc
       ffmpeg-full
-      baobab
-      pavucontrol
       wcalc
-      gedit
-      # gnome.gnome-screenshot
-      nautilus
-      localsend
-      file-roller
-      cheese
-      gimp
-      # firefox
-      brave
-      # chromium is built from source and is not in the binary cache right now.
-      # chromium
       yubikey-manager
-      vesktop
-      grok-bot
       jdk17_headless
-      obsidian
-      darktable
-      audacity
-      spotify
 
       # Development
       github-cli
@@ -94,16 +57,12 @@
       go-migrate
       go
 
-      # beekeeper-studio
       deno
       gcc
-      postman
       turso-cli
       flyctl
       spacetimedb
-      bruno
       sqlc
-      vscodium
 
       podman-tui # status of containers in the terminal
       docker-compose # start group of containers for dev
@@ -127,20 +86,6 @@
       tailwindcss-language-server
       superhtml
       emmet-ls
-    ] ++ (if config.packageConfiguration.enablePersonal then [
-      # sdrpp
-      # rtl-sdr-osmocom
-      # r2modman
-      ledger-live-desktop
-      signal-desktop
-      feather
-      prismlauncher
-      obs-studio
-    ] else []) ++ (if config.packageConfiguration.enableArgentum then [
-      brightnessctl # Laptop only
-    ] else []) ++ (if config.packageConfiguration.enableWork then [
-      slack
-      zoom-us
-    ] else []);
+    ];
   };
 }
