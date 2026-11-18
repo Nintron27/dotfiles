@@ -4,7 +4,8 @@
 #   ssh arx-vpn          normal login, through the arx-vpn WireGuard tunnel
 #   ssh arx-unlock       unlock prompt at boot, over the LAN
 #   ssh arx-unlock-wg    unlock prompt at boot, through the arx-unlock WireGuard tunnel
-#   nixos-rebuild switch --flake ~/dotfiles#arx --target-host arx --sudo
+#   ssh arx-root         root login, used for deploys:
+#   nixos-rebuild switch --flake ~/dotfiles#arx --target-host arx-root
 #
 #   sudo systemctl start wg-quick-arx-vpn       (or wg-quick-arx-unlock)
 #
@@ -44,7 +45,7 @@ in
 {
   programs.ssh = {
     extraConfig = ''
-      Host arx arx-vpn arx-unlock arx-unlock-wg
+      Host arx arx-vpn arx-root arx-unlock arx-unlock-wg
         ${identityFiles}
         IdentitiesOnly yes
 
@@ -62,13 +63,21 @@ in
         ControlPath ~/.ssh/cm-%C
         ControlPersist 10m
 
+      Host arx-root
+        User root
+        HostKeyAlias arx
+        # Reuse one connection so a deploy needs only one YubiKey touch.
+        ControlMaster auto
+        ControlPath ~/.ssh/cm-%C
+        ControlPersist 10m
+
       Host arx-unlock arx-unlock-wg
         User root
         Port ${toString arx.unlock.sshPort}
         # Both routes reach the same initrd SSH server; check its pinned key.
         HostKeyAlias arx-initrd
 
-      Host arx arx-unlock
+      Host arx arx-root arx-unlock
         HostName ${arx.lanIp}
 
       Host arx-vpn

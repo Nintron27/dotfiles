@@ -43,7 +43,8 @@
     settings = {
       PasswordAuthentication = false;
       KbdInteractiveAuthentication = false;
-      PermitRootLogin = "no";
+      # Root only with the YubiKeys, for deploys (`--target-host arx-root`).
+      PermitRootLogin = "prohibit-password";
     };
   };
 
@@ -79,11 +80,13 @@
     ];
   };
 
+  # Deploys go straight to root over SSH, so no user needs to be a trusted
+  # Nix user (that would be root-equivalent, and the agent jail refuses it).
+  users.users.root.openssh.authorizedKeys.keys = settings.users.nintron.sshKeys;
+
   # Login is key-only (no account password exists), so let wheel use sudo
-  # without one. Needed for `nixos-rebuild --target-host ... --sudo`.
+  # without one for day-to-day admin.
   security.sudo.wheelNeedsPassword = false;
-  # Allow pushing store paths over SSH during remote deploys.
-  nix.settings.trusted-users = [ "root" "@wheel" ];
 
   environment.systemPackages = with pkgs; [
     git
