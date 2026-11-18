@@ -78,6 +78,9 @@
 
       # Development
       github-cli
+      sops # edit secrets/*.yaml
+      age # age-keygen for the sops key
+      ssh-to-age # convert SSH host keys to sops recipients
       valkey
       git
       gnumake

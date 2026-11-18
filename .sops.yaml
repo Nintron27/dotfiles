@@ -1,0 +1,14 @@
+# Which age keys each secrets file is encrypted for. Public keys only.
+# After changing recipients here, re-encrypt with: sops updatekeys secrets/<file>.yaml
+keys:
+  # nintron's personal key (~/.config/sops/age/keys.txt): edits secrets.
+  - &nintron age1adg55q82zwe94rp7hwk3h8pzrfe4svgqa72ta4nxw4u4nt7mpu6sad9d8k
+  # arx's SSH host key (/etc/ssh/ssh_host_ed25519_key) via ssh-to-age: decrypts at activation.
+  - &arx age1xxpydjzcdu6n4kg0r278xm8xgfsvpjmendh9xuwhwfgtn05ehgyqk25qmm
+
+creation_rules:
+  - path_regex: secrets/arx\.yaml$
+    key_groups:
+      - age:
+          - *nintron
+          - *arx

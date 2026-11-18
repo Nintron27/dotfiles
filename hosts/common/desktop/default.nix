@@ -8,7 +8,7 @@
     ./pipewire.nix
     ./zsa-board.nix
     ./bluetooth.nix
-    ./arx-ssh.nix
+    ./arx-client.nix
   ];
 
   # Hytale's Linux launcher is a Flatpak bundle from accounts.hytale.com.

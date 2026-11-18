@@ -30,26 +30,6 @@
   networking.firewall.allowedUDPPorts = [ 53317 ];
   networking.firewall.allowedTCPPorts = [ 53317 ];
 
-  # WireGuard tunnel to arx's boot-time unlock prompt (see hosts/arx/initrd-unlock.nix).
-  # Only reaches 10.99.0.1; all other traffic is untouched.
-  #   sudo systemctl start wg-quick-arx-unlock && ssh arx-unlock-wg
-  networking.wg-quick.interfaces.arx-unlock = {
-    autostart = false;
-    address = [ "10.99.0.2/32" ];
-    # Generated on argentum; never leaves this machine.
-    privateKeyFile = "/etc/wireguard/arx-unlock.key";
-    peers = [
-      {
-        # arx initrd WireGuard public key
-        publicKey = "a5omECGi7fudcizNorkLKlznvgeMYxWoAAbkdW9eLw4=";
-        # TODO: switch to the dynamic DNS name once it exists.
-        endpoint = "10.0.0.162:51820";
-        allowedIPs = [ "10.99.0.1/32" ];
-        persistentKeepalive = 25;
-      }
-    ];
-  };
-
   # security.polkit.enable = true;
 
   systemd.sleep.settings.Sleep = {

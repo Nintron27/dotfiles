@@ -1,18 +1,19 @@
 # arx: headless homelab server (NAS, Hytale server, remote work box).
-{ lib, pkgs, ... }:
-let
-  sshKeys = import ../common/ssh-keys.nix;
-in
+{ lib, pkgs, settings, ... }:
 {
   imports = [
     ./hardware-configuration.nix
     ./disko.nix
     ./initrd-unlock.nix
+    ./ddns.nix
 
     ../common/base
   ];
 
   networking.hostName = "arx";
+
+  # Encrypted secrets (decrypted with this host's SSH host key); see .sops.yaml.
+  sops.defaultSopsFile = ../../secrets/arx.yaml;
 
   # ── Boot ──────────────────────────────────────────────────────────────
   boot.loader.systemd-boot.enable = true;
@@ -49,7 +50,7 @@ in
     isNormalUser = true;
     description = "nintron";
     extraGroups = [ "wheel" "networkmanager" ];
-    openssh.authorizedKeys.keys = sshKeys;
+    openssh.authorizedKeys.keys = settings.users.nintron.sshKeys;
   };
 
   # Login is key-only (no account password exists), so let wheel use sudo

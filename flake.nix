@@ -15,6 +15,10 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     kmonad = {
       url = "github:kmonad/kmonad?dir=nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -41,13 +45,16 @@
   };
 
   outputs = inputs@{ self, nixpkgs, nixos-hardware, catppuccin, home-manager, kmonad, ... }:
+  let
+    settings = import ./settings.nix;
+  in
   {
     nixosConfigurations = {
       igneous = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
 
-        specialArgs = { 
-          inherit inputs;
+        specialArgs = {
+          inherit inputs settings;
         };
 
         modules = [
@@ -57,8 +64,8 @@
       argentum = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
 
-        specialArgs = { 
-          inherit inputs;
+        specialArgs = {
+          inherit inputs settings;
         };
 
         modules = [
@@ -71,12 +78,13 @@
         system = "x86_64-linux";
 
         specialArgs = {
-          inherit inputs;
+          inherit inputs settings;
         };
 
         modules = [
           ./hosts/arx
           inputs.disko.nixosModules.disko
+          inputs.sops-nix.nixosModules.sops
         ];
       };
     };

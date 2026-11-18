@@ -1,38 +1,35 @@
 # Remote unlock of the encrypted root pool, before the real system boots.
 #
 # The initrd brings up the LAN (DHCP) plus a dedicated WireGuard tunnel, and
-# runs an SSH server on port 2222 that only accepts nintron's keys. Logging in
-# drops straight into the ZFS passphrase prompt; once entered, rpool unlocks,
-# the other pools unlock from keyfiles stored inside it, and boot continues.
+# runs an SSH server that only accepts nintron's keys. Logging in drops
+# straight into the ZFS passphrase prompt; once entered, rpool unlocks, the
+# other pools unlock from keyfiles stored inside it, and boot continues.
 #
-#   On the LAN:  ssh -p 2222 root@10.0.0.162
-#   Away:        bring up the `arx-unlock` WireGuard profile, then
-#                ssh -p 2222 root@10.99.0.1
+#   On the LAN:  ssh arx-unlock
+#   Away:        sudo systemctl start wg-quick-arx-unlock && ssh arx-unlock-wg
+#
+# Ports, addresses and public keys live in settings.nix (hosts.arx.unlock).
 #
 # The secrets below live unencrypted on the ESP (it has to be readable before
 # anything is unlocked), so they are *separate* keys used only for this:
 #   /etc/secrets/initrd/ssh_host_ed25519_key   initrd SSH host key
 #   /etc/secrets/initrd/wg-unlock.key          initrd WireGuard private key
-# They are put in place at install time by nixos-anywhere --extra-files and
+# They were put in place at install time by nixos-anywhere --extra-files and
 # must never be committed to this repo.
-{ pkgs, ... }:
+{ lib, pkgs, settings, ... }:
 let
-  sshKeys = import ../common/ssh-keys.nix;
+  unlock = settings.hosts.arx.unlock;
+  wg = unlock.wireguard;
+
   secretsDir = "/etc/secrets/initrd";
   wgKey = "${secretsDir}/wg-unlock.key";
-
   wgInterface = "wg-unlock";
-  wgPort = 51820; # same UDP port the main WireGuard VPN will use later
-  wgAddress = "10.99.0.1/24";
 
   # Devices allowed to reach the unlock prompt over WireGuard.
-  wgPeers = [
-    {
-      # argentum (laptop)
-      PublicKey = "dr4rwLEFdTTXCPbgSbfE6UZ34NPW685XCy5acqYVnwc=";
-      AllowedIPs = [ "10.99.0.2/32" ];
-    }
-  ];
+  wgPeers = lib.mapAttrsToList (_name: peer: {
+    PublicKey = peer.publicKey;
+    AllowedIPs = [ "${peer.address}/32" ];
+  }) wg.peers;
 in
 {
   boot.initrd = {
@@ -49,9 +46,9 @@ in
       flushBeforeStage2 = true;
       ssh = {
         enable = true;
-        port = 2222;
+        port = unlock.sshPort;
         hostKeys = [ "${secretsDir}/ssh_host_ed25519_key" ];
-        authorizedKeys = sshKeys;
+        authorizedKeys = settings.users.nintron.sshKeys;
       };
     };
 
@@ -74,13 +71,13 @@ in
           };
           wireguardConfig = {
             PrivateKeyFile = wgKey;
-            ListenPort = wgPort;
+            ListenPort = wg.port;
           };
           wireguardPeers = wgPeers;
         };
         networks."20-${wgInterface}" = {
           matchConfig.Name = wgInterface;
-          address = [ wgAddress ];
+          address = [ "${wg.address}/${toString wg.prefixLength}" ];
         };
       };
 
@@ -102,7 +99,7 @@ in
   };
 
   # The WireGuard interface outlives the initrd. Remove it once the real system
-  # is up so it doesn't hold UDP ${toString wgPort} for the main VPN.
+  # is up so it doesn't hold its UDP port for the main VPN.
   systemd.services.remove-initrd-wireguard = {
     description = "Remove the initrd unlock WireGuard interface";
     wantedBy = [ "multi-user.target" ];
