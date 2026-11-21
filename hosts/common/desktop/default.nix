@@ -9,6 +9,7 @@
     ./zsa-board.nix
     ./bluetooth.nix
     ./arx-client.nix
+    ./fido.nix
   ];
 
   # Hytale's Linux launcher is a Flatpak bundle from accounts.hytale.com.
